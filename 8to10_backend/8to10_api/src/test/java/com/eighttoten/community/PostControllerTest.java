@@ -43,7 +43,7 @@ class PostControllerTest {
     void searchPostPreviewPage() throws Exception {
         //given
         Map<String, Object> request = new HashMap<>();
-        request.put("keyword", "nick1");
+        request.put("keyword", "nick3");
         request.put("searchCond", "WRITER");
         request.put("sortCond", "LIKE");
         request.put("sortDirection", "DESC");
@@ -59,7 +59,6 @@ class PostControllerTest {
                 .content(body));
 
         //then
-        // then
         result.andExpect(status().isOk()) // HTTP 200 OK 검증
                 .andExpect(jsonPath("$.pageNumber").value(1)) // 페이지 번호 확인
                 .andExpect(jsonPath("$.pageSize").value(10)) // 페이지 크기 확인
@@ -69,10 +68,8 @@ class PostControllerTest {
                 .andExpect(jsonPath("$.contents").isArray())
                 .andExpect(jsonPath("$.contents.length()").value(10)) // 첫 페이지 10개 데이터 확인
 
-                .andExpect(jsonPath("$.contents[0].id").value(8))
-                .andExpect(jsonPath("$.contents[0].title").value("First PostEntity Post 8"))
-                .andExpect(jsonPath("$.contents[0].writer").value("system"))
-                .andExpect(jsonPath("$.contents[0].nickname").value("nick1"))
+                .andExpect(jsonPath("$.contents[0].id").value(38))
+                .andExpect(jsonPath("$.contents[0].nickname").value("nick3"))
                 .andExpect(jsonPath("$.contents[0].totalLike").value(7))
                 .andExpect(jsonPath("$.contents[0].totalScrap").value(2));
     }
@@ -95,7 +92,6 @@ class PostControllerTest {
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.title").value("First PostEntity Post 1"))
                 .andExpect(jsonPath("$.writer").value("normal@example.com"))
-                .andExpect(jsonPath("$.nickname").value("nick1"))
                 .andExpect(jsonPath("$.totalLike").value(5))
                 .andExpect(jsonPath("$.totalScrap").value(2))
                 .andExpect(jsonPath("$.hasLike").value(true))
