@@ -24,7 +24,7 @@ public class ScheduleAbleController {
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<Result<ScheduleResponse>> getAllSchedule(@CurrentMember Member member){
-        List<ScheduleAble> schedules = scheduleAbleService.findAllWithParentByMember(member);
+        List<ScheduleAble> schedules = scheduleAbleService.findAllWithParentByMemberEmail(member.getEmail());
         Result<ScheduleResponse> result = Result.fromElements(schedules, ScheduleResponse::from);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

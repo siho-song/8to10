@@ -1,6 +1,5 @@
 package com.eighttoten.schedule.service;
 
-import com.eighttoten.member.domain.Member;
 import com.eighttoten.schedule.domain.ScheduleAble;
 import com.eighttoten.schedule.domain.fschedule.repository.FScheduleDetailRepository;
 import com.eighttoten.schedule.domain.nschedule.repository.NScheduleDetailRepository;
@@ -20,20 +19,20 @@ public class ScheduleAbleService {
     private final VScheduleRepository vScheduleRepository;
 
     @Transactional(readOnly = true)
-    public List<ScheduleAble> findAllBetweenStartAndEnd(Member member, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    public List<ScheduleAble> findAllByMemberEmailBetweenStartAndEnd(String memberEmail, LocalDateTime start, LocalDateTime end) {
         List<ScheduleAble> allSchedules = new ArrayList<>();
-        allSchedules.addAll(vScheduleRepository.findAllByEmailBetweenStartAndEnd(member.getEmail(), startDateTime, endDateTime));
-        allSchedules.addAll(fScheduleDetailRepository.findAllByEmailBetweenStartAndEnd(member.getEmail(), startDateTime, endDateTime));
-        allSchedules.addAll(nScheduleDetailRepository.findAllByEmailBetweenStartAndEnd(member.getEmail(), startDateTime, endDateTime));
+        allSchedules.addAll(vScheduleRepository.findAllByMemberEmailBetweenStartAndEnd(memberEmail, start, end));
+        allSchedules.addAll(fScheduleDetailRepository.findAllByMemberEmailBetweenStartAndEnd(memberEmail, start, end));
+        allSchedules.addAll(nScheduleDetailRepository.findAllByMemberEmailBetweenStartAndEnd(memberEmail, start, end));
         return allSchedules;
     }
 
     @Transactional(readOnly = true)
-    public List<ScheduleAble> findAllWithParentByMember(Member member) {
+    public List<ScheduleAble> findAllWithParentByMemberEmail(String memberEmail) {
         List<ScheduleAble> allSchedules = new ArrayList<>();
-        allSchedules.addAll(vScheduleRepository.findAllByMemberEmail(member.getEmail()));
-        allSchedules.addAll(fScheduleDetailRepository.findAllWithParentByMemberEmail(member.getEmail()));
-        allSchedules.addAll(nScheduleDetailRepository.findAllWithParentByMemberEmail(member.getEmail()));
+        allSchedules.addAll(vScheduleRepository.findAllByMemberEmail(memberEmail));
+        allSchedules.addAll(fScheduleDetailRepository.findAllWithParentByMemberEmail(memberEmail));
+        allSchedules.addAll(nScheduleDetailRepository.findAllWithParentByMemberEmail(memberEmail));
         return allSchedules;
     }
 }

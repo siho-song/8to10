@@ -1,4 +1,4 @@
-package com.eighttoten.schedule.service.nschedule.repository;
+package com.eighttoten.schedule.nschedule.repository;
 
 import com.eighttoten.exception.ExceptionCode;
 import com.eighttoten.exception.NotFoundEntityException;
@@ -6,8 +6,8 @@ import com.eighttoten.schedule.domain.nschedule.NDetailWithParent;
 import com.eighttoten.schedule.domain.nschedule.NScheduleDetail;
 import com.eighttoten.schedule.domain.nschedule.NewNDetail;
 import com.eighttoten.schedule.domain.nschedule.repository.NScheduleDetailRepository;
-import com.eighttoten.schedule.service.nschedule.NScheduleDetailEntity;
-import com.eighttoten.schedule.service.nschedule.NScheduleEntity;
+import com.eighttoten.schedule.nschedule.NScheduleDetailEntity;
+import com.eighttoten.schedule.nschedule.NScheduleEntity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -65,29 +65,29 @@ public class NScheduleDetailRepositoryImpl implements NScheduleDetailRepository 
     }
 
     @Override
-    public List<NScheduleDetail> findAllByEmailAndDate(String email, LocalDate date) {
-        List<NScheduleDetailEntity> entities = nScheduleDetailRepository.findAllByEmailAndDate(email, date);
+    public List<NScheduleDetail> findAllByMemberEmailAndDate(String memberEmail, LocalDate date) {
+        List<NScheduleDetailEntity> entities = nScheduleDetailRepository.findAllByMemberEmailAndDate(memberEmail, date);
         return entities.stream().map(NScheduleDetailEntity::toNScheduleDetail).toList();
     }
 
     @Override
-    public List<NScheduleDetail> findAllByEmailBetweenStartAndEnd(String email, LocalDateTime startDateTime,
-                                                                  LocalDateTime endDateTime) {
-        List<NScheduleDetailEntity> entities = nScheduleDetailRepository.findAllBetweenStartAndEnd(email,
+    public List<NScheduleDetail> findAllByMemberEmailBetweenStartAndEnd(String memberEmail, LocalDateTime startDateTime,
+                                                                        LocalDateTime endDateTime) {
+        List<NScheduleDetailEntity> entities = nScheduleDetailRepository.findAllByMemberEmailBetweenStartAndEnd(memberEmail,
                 startDateTime, endDateTime);
         return entities.stream().map(NScheduleDetailEntity::toNScheduleDetail).toList();
     }
 
     @Override
-    public List<NScheduleDetail> findAllByEmailAndParentIdGEStartDate(String email, Long parentId, LocalDateTime start) {
-        List<NScheduleDetailEntity> entities = nScheduleDetailRepository.findAllByEmailAndParentIdGEStartDate(
-                email, parentId, start);
+    public List<NScheduleDetail> findAllByMemberEmailAndParentIdGEStart(String memberEmail, Long parentId, LocalDateTime start) {
+        List<NScheduleDetailEntity> entities = nScheduleDetailRepository.findAllByMemberEmailAndParentIdGEStart(
+                memberEmail, parentId, start);
         return entities.stream().map(NScheduleDetailEntity::toNScheduleDetail).toList();
     }
 
     @Override
-    public List<NDetailWithParent> findAllWithParentByMemberEmail(String email) {
-        List<NScheduleDetailEntity> entities = nScheduleDetailRepository.findAllWithParentByMemberEmail(email);
+    public List<NDetailWithParent> findAllWithParentByMemberEmail(String memberEmail) {
+        List<NScheduleDetailEntity> entities = nScheduleDetailRepository.findAllWithParentByMemberEmail(memberEmail);
         return entities.stream().map(NScheduleDetailEntity::toNDetailWithParent).toList();
     }
 }

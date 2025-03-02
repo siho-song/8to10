@@ -4,7 +4,7 @@ import com.eighttoten.community.domain.post.NewPostHeart;
 
 public interface PostHeartRepository {
     void save(NewPostHeart newPostHeart);
-    void deleteHeartsByPostId(Long postId);
+    void deleteAllByPostId(Long postId);
     long deleteByMemberIdAndPostId(Long memberId, Long postId);
     boolean existsByMemberIdAndPostId(Long memberId, Long postId);
 }

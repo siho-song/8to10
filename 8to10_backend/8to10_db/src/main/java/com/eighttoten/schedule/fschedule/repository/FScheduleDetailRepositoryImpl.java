@@ -1,4 +1,4 @@
-package com.eighttoten.schedule.service.fschedule.repository;
+package com.eighttoten.schedule.fschedule.repository;
 
 import com.eighttoten.exception.ExceptionCode;
 import com.eighttoten.exception.NotFoundEntityException;
@@ -6,8 +6,8 @@ import com.eighttoten.schedule.domain.fschedule.FDetailWithParent;
 import com.eighttoten.schedule.domain.fschedule.FScheduleDetail;
 import com.eighttoten.schedule.domain.fschedule.NewFDetail;
 import com.eighttoten.schedule.domain.fschedule.repository.FScheduleDetailRepository;
-import com.eighttoten.schedule.service.fschedule.FScheduleDetailEntity;
-import com.eighttoten.schedule.service.fschedule.FScheduleEntity;
+import com.eighttoten.schedule.fschedule.FScheduleDetailEntity;
+import com.eighttoten.schedule.fschedule.FScheduleEntity;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -52,20 +52,20 @@ public class FScheduleDetailRepositoryImpl implements FScheduleDetailRepository 
     }
 
     @Override
-    public List<FScheduleDetail> findAllByEmailBetweenStartAndEnd(String email, LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        List<FScheduleDetailEntity> entities = fScheduleDetailRepository.findAllBetweenStartAndEnd(email,
+    public List<FScheduleDetail> findAllByMemberEmailBetweenStartAndEnd(String memberEmail, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        List<FScheduleDetailEntity> entities = fScheduleDetailRepository.findAllByMemberEmailBetweenStartAndEnd(memberEmail,
                 startDateTime, endDateTime);
         return entities.stream().map(FScheduleDetailEntity::toFScheduleDetail).toList();
     }
 
     @Override
-    public List<FScheduleDetail> findAllByEmailAndParentIdGEStartDate(
+    public List<FScheduleDetail> findAllByMemberEmailAndParentIdGEStart(
             String email,
             Long parentId,
             LocalDateTime start)
     {
-        List<FScheduleDetailEntity> entities = fScheduleDetailRepository.findAllByStartDateGEAndEmailAndParentId(
-                start, email, parentId);
+        List<FScheduleDetailEntity> entities = fScheduleDetailRepository.findAllByMemberEmailAndParentIdGEStart(
+                email, parentId, start);
         return entities.stream().map(FScheduleDetailEntity::toFScheduleDetail).toList();
     }
 

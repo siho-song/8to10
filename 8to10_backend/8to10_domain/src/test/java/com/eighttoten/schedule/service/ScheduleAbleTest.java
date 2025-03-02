@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import com.eighttoten.member.domain.Member;
 import com.eighttoten.schedule.domain.ScheduleAble;
 import com.eighttoten.schedule.domain.fschedule.FDetailWithParent;
 import com.eighttoten.schedule.domain.fschedule.FScheduleDetail;
@@ -42,25 +41,22 @@ class ScheduleAbleTest {
     @DisplayName("기간 내 멤버의 모든 일정화 할수 있는 객체들을 조회한다.")
     void findAllBetweenStartAndEnd(){
         //given
-        Member member = new Member(null, null, null, null, null, null, null,
-                null, null, null, 0, false, false);
-
         VSchedule vSchedule = new VSchedule(null, null, null, null,
                 null, null, null);
-        when(vScheduleRepository.findAllByEmailBetweenStartAndEnd(any(), any(), any())).thenReturn(List.of(vSchedule));
+        when(vScheduleRepository.findAllByMemberEmailBetweenStartAndEnd(any(), any(), any())).thenReturn(List.of(vSchedule));
 
         NScheduleDetail nScheduleDetail = new NScheduleDetail(null, null, null, null, null,
                 null, null, false, 0, 0);
-        when(nScheduleDetailRepository.findAllByEmailBetweenStartAndEnd(any(), any(), any())).thenReturn(
+        when(nScheduleDetailRepository.findAllByMemberEmailBetweenStartAndEnd(any(), any(), any())).thenReturn(
                 List.of(nScheduleDetail));
 
         FScheduleDetail fScheduleDetail = new FScheduleDetail(null, null, null,
                 null, null, null);
-        when(fScheduleDetailRepository.findAllByEmailBetweenStartAndEnd(any(), any(), any())).thenReturn(
+        when(fScheduleDetailRepository.findAllByMemberEmailBetweenStartAndEnd(any(), any(), any())).thenReturn(
                 List.of(fScheduleDetail));
 
         //when
-        List<ScheduleAble> scheduleAbles = scheduleAbleService.findAllBetweenStartAndEnd(member, null, null);
+        List<ScheduleAble> scheduleAbles = scheduleAbleService.findAllByMemberEmailBetweenStartAndEnd(null, null, null);
 
         //then
         assertThat(scheduleAbles).hasSize(3);
@@ -70,9 +66,6 @@ class ScheduleAbleTest {
     @DisplayName("멤버의 모든 일정화 할수 있는 객체들을 부모 객체와 함께 조회한다.")
     void findAllWithParentByMember(){
         //given
-        Member member = new Member(null, null, null, null, null, null, null,
-                null, null, null, 0, false, false);
-
         VSchedule vSchedule = new VSchedule(null, null, null, null,
                 null, null, null);
         when(vScheduleRepository.findAllByMemberEmail(any())).thenReturn(List.of(vSchedule));
@@ -86,7 +79,7 @@ class ScheduleAbleTest {
         when(fScheduleDetailRepository.findAllWithParentByMemberEmail(any())).thenReturn(List.of(fDetailWithParent));
 
         //when
-        List<ScheduleAble> scheduleAbles = scheduleAbleService.findAllWithParentByMember(member);
+        List<ScheduleAble> scheduleAbles = scheduleAbleService.findAllWithParentByMemberEmail(null);
 
         //then
         assertThat(scheduleAbles).hasSize(3);

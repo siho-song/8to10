@@ -53,13 +53,13 @@ public class PostHeartRepositoryTest {
 
     @Test
     @DisplayName("게시글의 id로 게시글에 저장된 게시글 좋아요들을 모두 삭제한다.")
-    void deleteHeartsByPostId(){
+    void deleteAllByPostId(){
         //given
         Long postId = 1L;
         Long memberId = 1L;
 
         //when,then
-        assertThatCode(() -> postHeartRepository.deleteHeartsByPostId(postId)).doesNotThrowAnyException();
+        assertThatCode(() -> postHeartRepository.deleteAllByPostId(postId)).doesNotThrowAnyException();
         assertThat(postHeartRepository.existsByMemberIdAndPostId(memberId,postId)).isFalse();
     }
 

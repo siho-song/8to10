@@ -1,6 +1,6 @@
-package com.eighttoten.schedule.service.nschedule.repository;
+package com.eighttoten.schedule.nschedule.repository;
 
-import com.eighttoten.schedule.service.nschedule.NScheduleDetailEntity;
+import com.eighttoten.schedule.nschedule.NScheduleDetailEntity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -20,22 +20,22 @@ public interface NScheduleDetailJpaRepository extends JpaRepository<NScheduleDet
     @Query("select nd from NScheduleDetailEntity nd where nd.id = :id")
     Optional<NScheduleDetailEntity> findByIdWithParent(@Param(value = "id") Long id);
 
-    @Query("select nd from NScheduleDetailEntity nd where nd.startDateTime >= :start and nd.nScheduleEntity.id = :parentId and nd.createdBy = :email")
-    List<NScheduleDetailEntity> findAllByEmailAndParentIdGEStartDate(@Param(value = "email") String email,
-                                                                     @Param(value = "parentId") Long parentId,
-                                                                     @Param(value = "start") LocalDateTime start);
+    @Query("select nd from NScheduleDetailEntity nd where nd.startDateTime >= :start and nd.nScheduleEntity.id = :parentId and nd.createdBy = :memberEmail")
+    List<NScheduleDetailEntity> findAllByMemberEmailAndParentIdGEStart(@Param(value = "memberEmail") String memberEmail,
+                                                                       @Param(value = "parentId") Long parentId,
+                                                                       @Param(value = "start") LocalDateTime start);
 
-    @Query("select nd from NScheduleDetailEntity nd where nd.createdBy = :email and DATE(nd.startDateTime) = :date")
-    List<NScheduleDetailEntity> findAllByEmailAndDate(@Param(value = "email") String email,
-                                                      @Param(value = "date") LocalDate date);
+    @Query("select nd from NScheduleDetailEntity nd where nd.createdBy = :memberEmail and DATE(nd.startDateTime) = :date")
+    List<NScheduleDetailEntity> findAllByMemberEmailAndDate(@Param(value = "memberEmail") String memberEmail,
+                                                            @Param(value = "date") LocalDate date);
 
     @Query("select nd from NScheduleDetailEntity nd where nd.id in :ids order by nd.id")
     List<NScheduleDetailEntity> findAllByIds(@Param(value = "ids") List<Long> ids);
 
     @Query("select nd from NScheduleDetailEntity nd where nd.startDateTime >= :startDateTime and nd.endDateTime <= :endDateTime and nd.createdBy = :memberEmail")
-    List<NScheduleDetailEntity> findAllBetweenStartAndEnd(@Param(value = "memberEmail") String memberEmail,
-                                                    @Param(value = "startDateTime") LocalDateTime startDateTime,
-                                                    @Param(value = "endDateTime") LocalDateTime endDateTime);
+    List<NScheduleDetailEntity> findAllByMemberEmailBetweenStartAndEnd(@Param(value = "memberEmail") String memberEmail,
+                                                                       @Param(value = "startDateTime") LocalDateTime startDateTime,
+                                                                       @Param(value = "endDateTime") LocalDateTime endDateTime);
 
     @EntityGraph(attributePaths = "nScheduleEntity")
     @Query("select nd from NScheduleDetailEntity nd where nd.createdBy = :memberEmail")

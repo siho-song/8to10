@@ -77,7 +77,7 @@ public class ReplyService{
         List<Long> replyIds = new ArrayList<>();
 
         replyIds.add(reply.getId());
-        replyIds.addAll(replyRepository.findNestedRepliesByParentId(reply.getId())
+        replyIds.addAll(replyRepository.findAllByParentId(reply.getId())
                 .stream().map(Reply::getId).toList());
 
         replyHeartRepository.deleteAllByReplyIds(replyIds);

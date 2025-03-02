@@ -47,7 +47,7 @@ public class NScheduleService {
         LocalDateTime endDateTime = newNSchedule.getEndDateTime();
 
         List<ScheduleAble> scheduleAbles = scheduleAbleService
-                .findAllBetweenStartAndEnd(member, startDateTime, endDateTime);
+                .findAllByMemberEmailBetweenStartAndEnd(member.getEmail(), startDateTime, endDateTime);
 
         Map<LocalDate, List<TimeSlot>> slotMap = timeSlotService.findAllBetweenStartAndEnd(
                 getScheduleMapWithinWorkTime(scheduleAbles), startDateTime, endDateTime);

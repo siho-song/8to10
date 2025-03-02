@@ -31,7 +31,7 @@ public class AchievementService {
         Member member = event.getMember();
 
         List<NScheduleDetail> nDetailsForDate = nScheduleDetailRepository
-                .findAllByEmailAndDate(member.getEmail(), date);
+                .findAllByMemberEmailAndDate(member.getEmail(), date);
 
         double achievementRate = calculateAchievementRate(nDetailsForDate);
 

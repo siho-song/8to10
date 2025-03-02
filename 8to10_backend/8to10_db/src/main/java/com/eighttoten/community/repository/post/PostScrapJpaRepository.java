@@ -14,7 +14,7 @@ public interface PostScrapJpaRepository extends JpaRepository<PostScrapEntity, L
 
     @Modifying
     @Query("delete from PostScrapEntity s where s.postEntity.id = :postId")
-    void deleteScrapsByPostId(@Param(value = "postId") Long postId);
+    void deleteAllByPostId(@Param(value = "postId") Long postId);
 
     @EntityGraph(attributePaths = "postEntity")
     @Query("select s from PostScrapEntity s where s.memberEntity.id = :memberId")

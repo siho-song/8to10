@@ -104,7 +104,7 @@ public class NScheduleDetailService {
             Member member,
             Long parentId)
     {
-        List<NScheduleDetail> nScheduleDetails = nScheduleDetailRepository.findAllByEmailAndParentIdGEStartDate(
+        List<NScheduleDetail> nScheduleDetails = nScheduleDetailRepository.findAllByMemberEmailAndParentIdGEStart(
                 member.getEmail(),
                 parentId,
                 startDate);

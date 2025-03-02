@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 public interface PostHeartJpaRepository extends JpaRepository<PostHeartEntity, Long> {
     @Modifying
     @Query("delete from PostHeartEntity h where h.postEntity.id = :postId")
-    void deleteHeartsByPostId(@Param(value = "postId") Long postId);
+    void deleteAllByPostId(@Param(value = "postId") Long postId);
 
     long deleteByMemberEntityIdAndPostEntityId(Long memberId, Long postId);
     boolean existsByMemberEntityIdAndPostEntityId(Long memberId, Long postId);

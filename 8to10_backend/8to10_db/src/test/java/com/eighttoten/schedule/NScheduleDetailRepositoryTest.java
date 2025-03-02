@@ -8,7 +8,7 @@ import com.eighttoten.schedule.domain.nschedule.NDetailWithParent;
 import com.eighttoten.schedule.domain.nschedule.NScheduleDetail;
 import com.eighttoten.schedule.domain.nschedule.NewNDetail;
 import com.eighttoten.schedule.domain.nschedule.repository.NScheduleDetailRepository;
-import com.eighttoten.schedule.service.nschedule.repository.NScheduleDetailRepositoryImpl;
+import com.eighttoten.schedule.nschedule.repository.NScheduleDetailRepositoryImpl;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -140,14 +140,14 @@ public class NScheduleDetailRepositoryTest {
 
     @Test
     @DisplayName("시작날짜 이후의 모든 일반일정들을 자식일정을 멤버의 이메일과, 부모일정의 id로 조회한다.")
-    void findAllByEmailAndParentIdGEStartDate(){
+    void findAllByMemberEmailAndParentIdGEStart(){
         //given
         String email = "normal2@example.com";
         Long parentId = 3L;
         LocalDateTime start = LocalDateTime.of(2024, 4, 1, 0, 0);
 
         //when
-        List<NScheduleDetail> nDetails = nScheduleDetailRepository.findAllByEmailAndParentIdGEStartDate(email, parentId, start);
+        List<NScheduleDetail> nDetails = nScheduleDetailRepository.findAllByMemberEmailAndParentIdGEStart(email, parentId, start);
 
         //then
         assertThat(nDetails).hasSizeGreaterThan(1);
@@ -155,13 +155,13 @@ public class NScheduleDetailRepositoryTest {
 
     @Test
     @DisplayName("모든 일반일정 자식일정들을 멤버의 이메일, 날짜로 조회한다.")
-    void findAllByEmailAndDate(){
+    void findAllByMemberEmailAndDate(){
         //given
         String email = "normal2@example.com";
         LocalDate date = LocalDate.of(2024, 6, 1);
 
         //when
-        List<NScheduleDetail> nDetails = nScheduleDetailRepository.findAllByEmailAndDate(email, date);
+        List<NScheduleDetail> nDetails = nScheduleDetailRepository.findAllByMemberEmailAndDate(email, date);
 
         //then
         assertThat(nDetails).hasSize(2);
@@ -169,14 +169,14 @@ public class NScheduleDetailRepositoryTest {
 
     @Test
     @DisplayName("멤버의 이메일로 시작날짜와 종료날짜 사이에 있는 모든 일반일정 자식일정들을 조회한다.")
-    void findAllByEmailBetweenStartAndEnd(){
+    void findAllByMemberEmailBetweenStartAndEnd(){
         //given
         String email = "normal2@example.com";
         LocalDateTime start = LocalDateTime.of(2024, 6, 1, 0, 0);
         LocalDateTime end = LocalDateTime.of(2024, 6, 7, 0, 0);
 
         //when
-        List<NScheduleDetail> nDetails = nScheduleDetailRepository.findAllByEmailBetweenStartAndEnd(email, start, end);
+        List<NScheduleDetail> nDetails = nScheduleDetailRepository.findAllByMemberEmailBetweenStartAndEnd(email, start, end);
 
         //then
         assertThat(nDetails).hasSize(6);

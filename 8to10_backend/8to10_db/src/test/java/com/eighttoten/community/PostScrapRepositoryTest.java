@@ -59,7 +59,7 @@ public class PostScrapRepositoryTest {
         Long memberId = 1L;
 
         //when,then
-        assertThatCode(() -> postScrapRepository.deleteScrapsByPostId(postId)).doesNotThrowAnyException();
+        assertThatCode(() -> postScrapRepository.deleteAllByPostId(postId)).doesNotThrowAnyException();
         assertThat(postScrapRepository.existsByMemberIdAndPostId(memberId,postId)).isFalse();
     }
 

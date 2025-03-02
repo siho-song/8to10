@@ -48,7 +48,7 @@ public class ReplyRepositoryImpl implements ReplyRepository {
 
     @Override
     public void deleteByReplyIds(List<Long> ids) {
-        replyRepository.deleteByReplyIds(ids);
+        replyRepository.deleteAllByReplyIds(ids);
     }
 
     @Override
@@ -62,8 +62,8 @@ public class ReplyRepositoryImpl implements ReplyRepository {
     }
 
     @Override
-    public List<Reply> findAllByPostId(Long id) {
-        return replyRepository.findAllByPostEntityId(id).stream().map(ReplyEntity::toReply).toList();
+    public List<Reply> findAllByPostId(Long postId) {
+        return replyRepository.findAllByPostEntityId(postId).stream().map(ReplyEntity::toReply).toList();
     }
 
     @Override
@@ -72,8 +72,8 @@ public class ReplyRepositoryImpl implements ReplyRepository {
     }
 
     @Override
-    public List<Reply> findNestedRepliesByParentId(Long parentReplyId) {
-        List<ReplyEntity> entities = replyRepository.findNestedRepliesByParentReplyId(parentReplyId);
+    public List<Reply> findAllByParentId(Long parentReplyId) {
+        List<ReplyEntity> entities = replyRepository.findAllByParentReplyId(parentReplyId);
         return entities.stream().map(ReplyEntity::toReply).toList();
     }
 }

@@ -112,7 +112,7 @@ public class ReplyIntegrationTest {
         //given
         Member member = authAccessor.getAuthenticatedMember();
         Long replyId = 1L;
-        List<Long> nestedReplyIds = replyRepository.findNestedRepliesByParentId(1L)
+        List<Long> nestedReplyIds = replyRepository.findAllByParentId(1L)
                 .stream().map(Reply::getId).toList();
 
         //when

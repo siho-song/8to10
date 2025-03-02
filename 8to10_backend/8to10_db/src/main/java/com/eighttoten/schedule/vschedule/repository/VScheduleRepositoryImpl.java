@@ -1,4 +1,4 @@
-package com.eighttoten.schedule.service.vschedule.repository;
+package com.eighttoten.schedule.vschedule.repository;
 
 import com.eighttoten.exception.ExceptionCode;
 import com.eighttoten.exception.NotFoundEntityException;
@@ -7,7 +7,7 @@ import com.eighttoten.member.repository.MemberJpaRepository;
 import com.eighttoten.schedule.domain.vschedule.NewVSchedule;
 import com.eighttoten.schedule.domain.vschedule.VSchedule;
 import com.eighttoten.schedule.domain.vschedule.repository.VScheduleRepository;
-import com.eighttoten.schedule.service.vschedule.VScheduleEntity;
+import com.eighttoten.schedule.vschedule.VScheduleEntity;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -53,8 +53,8 @@ public class VScheduleRepositoryImpl implements VScheduleRepository {
     }
 
     @Override
-    public List<VSchedule> findAllByEmailBetweenStartAndEnd(String email, LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        List<VScheduleEntity> entities = vScheduleRepository.findAllBetweenStartAndEnd(email, startDateTime, endDateTime);
+    public List<VSchedule> findAllByMemberEmailBetweenStartAndEnd(String email, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        List<VScheduleEntity> entities = vScheduleRepository.findAllByMemberEmailBetweenStartAndEnd(email, startDateTime, endDateTime);
         return entities.stream().map(VScheduleEntity::toVSchedule).toList();
     }
 }
