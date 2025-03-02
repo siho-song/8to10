@@ -1,4 +1,4 @@
-package com.eighttoten.schedule.service.nschedule.repository;
+package com.eighttoten.schedule.nschedule.repository;
 
 import com.eighttoten.exception.ExceptionCode;
 import com.eighttoten.exception.NotFoundEntityException;
@@ -7,7 +7,7 @@ import com.eighttoten.member.repository.MemberJpaRepository;
 import com.eighttoten.schedule.domain.nschedule.NSchedule;
 import com.eighttoten.schedule.domain.nschedule.NewNSchedule;
 import com.eighttoten.schedule.domain.nschedule.repository.NScheduleRepository;
-import com.eighttoten.schedule.service.nschedule.NScheduleEntity;
+import com.eighttoten.schedule.nschedule.NScheduleEntity;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

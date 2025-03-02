@@ -1,5 +1,6 @@
-package com.eighttoten.achievement;
+package com.eighttoten.achievement.dto;
 
+import com.eighttoten.achievement.Achievement;
 import java.time.LocalDate;
 import lombok.Builder;
 import lombok.Getter;

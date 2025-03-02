@@ -1,4 +1,4 @@
-package com.eighttoten.community.event.board;
+package com.eighttoten.community.event.post;
 
 import com.eighttoten.community.domain.post.Post;
 import lombok.Getter;

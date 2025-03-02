@@ -1,5 +1,6 @@
-package com.eighttoten.achievement;
+package com.eighttoten.achievement.repository;
 
+import com.eighttoten.achievement.AchievementEntity;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;

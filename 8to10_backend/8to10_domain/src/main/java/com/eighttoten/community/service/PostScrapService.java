@@ -4,8 +4,8 @@ import static com.eighttoten.exception.ExceptionCode.DUPLICATED_POST_SCRAP;
 
 import com.eighttoten.community.domain.post.NewPostScrap;
 import com.eighttoten.community.domain.post.repository.PostScrapRepository;
-import com.eighttoten.community.event.board.PostScrapAddEvent;
-import com.eighttoten.community.event.board.PostScrapSubEvent;
+import com.eighttoten.community.event.post.PostScrapAddEvent;
+import com.eighttoten.community.event.post.PostScrapSubEvent;
 import com.eighttoten.exception.DuplicatedException;
 import com.eighttoten.member.domain.Member;
 import lombok.RequiredArgsConstructor;

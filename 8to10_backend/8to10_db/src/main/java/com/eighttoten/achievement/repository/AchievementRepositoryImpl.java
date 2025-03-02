@@ -1,5 +1,10 @@
-package com.eighttoten.achievement;
+package com.eighttoten.achievement.repository;
 
+import com.eighttoten.achievement.Achievement;
+import com.eighttoten.achievement.AchievementEntity;
+import com.eighttoten.achievement.AchievementRepository;
+import com.eighttoten.achievement.AchievementWithMember;
+import com.eighttoten.achievement.NewAchievement;
 import com.eighttoten.exception.ExceptionCode;
 import com.eighttoten.exception.NotFoundEntityException;
 import com.eighttoten.member.MemberEntity;

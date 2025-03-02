@@ -4,7 +4,7 @@ import com.eighttoten.community.domain.post.Post;
 import com.eighttoten.community.domain.post.repository.PostRepository;
 import com.eighttoten.community.domain.reply.Reply;
 import com.eighttoten.community.domain.reply.repository.ReplyRepository;
-import com.eighttoten.community.event.board.PostStatsUpdateEvent;
+import com.eighttoten.community.event.post.PostStatsUpdateEvent;
 import com.eighttoten.community.event.reply.ReplyStatsUpdateEvent;
 import com.eighttoten.exception.ExceptionCode;
 import com.eighttoten.exception.NotFoundEntityException;

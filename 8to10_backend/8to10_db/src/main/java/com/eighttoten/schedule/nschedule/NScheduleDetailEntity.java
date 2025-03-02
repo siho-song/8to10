@@ -1,4 +1,4 @@
-package com.eighttoten.schedule.service.nschedule;
+package com.eighttoten.schedule.nschedule;
 
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;

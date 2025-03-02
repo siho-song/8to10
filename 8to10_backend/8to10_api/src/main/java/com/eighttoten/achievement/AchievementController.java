@@ -2,6 +2,7 @@ package com.eighttoten.achievement;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+import com.eighttoten.achievement.dto.AchievementResponse;
 import com.eighttoten.member.domain.Member;
 import com.eighttoten.support.CurrentMember;
 import com.eighttoten.support.Result;

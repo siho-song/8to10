@@ -7,7 +7,7 @@ import com.eighttoten.schedule.domain.nschedule.NSchedule;
 import com.eighttoten.schedule.domain.nschedule.NScheduleUpdate;
 import com.eighttoten.schedule.domain.nschedule.NewNSchedule;
 import com.eighttoten.schedule.domain.nschedule.repository.NScheduleRepository;
-import com.eighttoten.schedule.service.nschedule.repository.NScheduleRepositoryImpl;
+import com.eighttoten.schedule.nschedule.repository.NScheduleRepositoryImpl;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Optional;

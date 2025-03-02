@@ -1,5 +1,8 @@
-package com.eighttoten.auth;
+package com.eighttoten.auth.repository;
 
+import com.eighttoten.auth.Auth;
+import com.eighttoten.auth.AuthEntity;
+import com.eighttoten.auth.AuthRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

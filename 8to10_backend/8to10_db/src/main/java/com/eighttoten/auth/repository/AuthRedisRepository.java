@@ -1,5 +1,6 @@
-package com.eighttoten.auth;
+package com.eighttoten.auth.repository;
 
+import com.eighttoten.auth.AuthEntity;
 import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 
