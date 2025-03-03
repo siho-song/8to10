@@ -56,7 +56,7 @@ public class FScheduleController {
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> deleteById(
             @CurrentMember Member member,
-            Long id
+            @PathVariable(name = "id") Long id
     ){
         fScheduleService.deleteById(member, id);
         return ResponseEntity.noContent().build();
