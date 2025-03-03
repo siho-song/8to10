@@ -8,7 +8,6 @@ import lombok.Getter;
 
 @Getter
 public class PostPageRequest {
-    @Size(min = 1)
     private String keyword; //제목, 내용, 닉네임으로 검색
     private String searchCond; //TITLE,CONTENTS,WRITER
     private String sortCond;
@@ -17,6 +16,7 @@ public class PostPageRequest {
     @Min(value = 1)
     private Long pageNum;
     @NotNull
+    @Min(value = 1)
     private Long pageSize;
 
 
