@@ -163,21 +163,21 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
 
 
     private BooleanExpression containTitle(String cond, String title){
-        if(cond.equals(SearchCond.TITLE.name())){
+        if(cond.equals(SearchCond.TITLE.name()) && title != null){
             return qPost.title.contains(title);
         }
         return null;
     }
 
     private BooleanExpression containContents(String cond, String contents){
-        if(cond.equals(SearchCond.CONTENTS.name())){
+        if(cond.equals(SearchCond.CONTENTS.name()) && contents != null){
             return qPost.contents.contains(contents);
         }
         return null;
     }
 
     private BooleanExpression containWriter(String cond, String writer){
-        if(cond.equals(SearchCond.WRITER.name())){
+        if(cond.equals(SearchCond.WRITER.name()) && writer != null){
             return qPost.memberEntity.nickname.contains(writer);
         }
         return null;
