@@ -39,7 +39,7 @@ public class PostController {
     private final PostScrapService postScrapService;
 
     @GetMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<PageResponse<PostPreviewResponse>> getPostPage(@Valid @RequestBody PostPageRequest request)
+    public ResponseEntity<PageResponse<PostPreviewResponse>> getPostPage(@Valid PostPageRequest request)
     {
         Pagination<PostPreview> postPreviews = postService.searchPostPreviewPages(request.toSearchPostPage());
         List<PostPreviewResponse> postPreviewResponses = postPreviews.getContents().stream().map(PostPreviewResponse::from).toList();
