@@ -8,7 +8,7 @@ import com.eighttoten.schedule.domain.vschedule.NewVSchedule;
 import com.eighttoten.schedule.domain.vschedule.VSchedule;
 import com.eighttoten.schedule.domain.vschedule.VScheduleUpdate;
 import com.eighttoten.schedule.domain.vschedule.repository.VScheduleRepository;
-import com.eighttoten.schedule.service.vschedule.repository.VScheduleRepositoryImpl;
+import com.eighttoten.schedule.vschedule.repository.VScheduleRepositoryImpl;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
@@ -90,14 +90,14 @@ public class VScheduleRepositoryTest {
 
     @Test
     @DisplayName("시작날짜와 종료날짜 사이에 있는 모든 변동일정을 조회한다.")
-    void findAllByEmailBetweenStartAndEnd(){
+    void findAllByMemberEmailBetweenStartAndEnd(){
         //given
         String email = "normal@example.com";
         LocalDateTime start = LocalDateTime.of(2024, 7, 1, 0, 0);
         LocalDateTime end = LocalDateTime.of(2024, 11, 1, 0, 0);
 
         //when,then
-        assertThat(vScheduleRepository.findAllByEmailBetweenStartAndEnd(email, start, end).size()).isGreaterThan(1);
+        assertThat(vScheduleRepository.findAllByMemberEmailBetweenStartAndEnd(email, start, end).size()).isGreaterThan(1);
     }
 
     @Test

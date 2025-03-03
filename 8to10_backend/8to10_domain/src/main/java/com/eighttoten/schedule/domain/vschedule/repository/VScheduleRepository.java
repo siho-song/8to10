@@ -14,5 +14,5 @@ public interface VScheduleRepository {
     Optional<VSchedule> findById(Long id);
 
     List<VSchedule> findAllByMemberEmail(String memberEmail);
-    List<VSchedule> findAllByEmailBetweenStartAndEnd(String email, LocalDateTime startDateTime, LocalDateTime endDateTime);
+    List<VSchedule> findAllByMemberEmailBetweenStartAndEnd(String email, LocalDateTime startDateTime, LocalDateTime endDateTime);
 }

@@ -32,13 +32,13 @@ public class PostScrapRepositoryImpl implements PostScrapRepository {
     }
 
     @Override
-    public long deleteByMemberIdAndPostId(Long memberId, Long postId) {
-        return postScrapRepository.deleteByMemberEntityIdAndPostEntityId(memberId, postId);
+    public void deleteAllByPostId(Long postId) {
+        postScrapRepository.deleteAllByPostId(postId);
     }
 
     @Override
-    public void deleteScrapsByPostId(Long postId) {
-        postScrapRepository.deleteScrapsByPostId(postId);
+    public long deleteByMemberIdAndPostId(Long memberId, Long postId) {
+        return postScrapRepository.deleteByMemberEntityIdAndPostEntityId(memberId, postId);
     }
 
     @Override

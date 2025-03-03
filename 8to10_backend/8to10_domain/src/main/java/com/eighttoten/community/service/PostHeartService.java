@@ -4,8 +4,8 @@ import static com.eighttoten.exception.ExceptionCode.DUPLICATED_POST_HEART;
 
 import com.eighttoten.community.domain.post.NewPostHeart;
 import com.eighttoten.community.domain.post.repository.PostHeartRepository;
-import com.eighttoten.community.event.board.PostHeartAddEvent;
-import com.eighttoten.community.event.board.PostHeartSubEvent;
+import com.eighttoten.community.event.post.PostHeartAddEvent;
+import com.eighttoten.community.event.post.PostHeartSubEvent;
 import com.eighttoten.exception.DuplicatedException;
 import com.eighttoten.member.domain.Member;
 import lombok.RequiredArgsConstructor;

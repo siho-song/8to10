@@ -35,8 +35,8 @@ public class PostHeartRepositoryImpl implements PostHeartRepository {
     }
 
     @Override
-    public void deleteHeartsByPostId(Long postId) {
-        postHeartRepository.deleteHeartsByPostId(postId);
+    public void deleteAllByPostId(Long postId) {
+        postHeartRepository.deleteAllByPostId(postId);
     }
 
     @Override

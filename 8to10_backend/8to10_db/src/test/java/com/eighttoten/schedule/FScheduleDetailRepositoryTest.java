@@ -9,7 +9,7 @@ import com.eighttoten.schedule.domain.fschedule.FDetailWithParent;
 import com.eighttoten.schedule.domain.fschedule.FScheduleDetail;
 import com.eighttoten.schedule.domain.fschedule.NewFDetail;
 import com.eighttoten.schedule.domain.fschedule.repository.FScheduleDetailRepository;
-import com.eighttoten.schedule.service.fschedule.repository.FScheduleDetailRepositoryImpl;
+import com.eighttoten.schedule.fschedule.repository.FScheduleDetailRepositoryImpl;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -122,14 +122,14 @@ public class FScheduleDetailRepositoryTest {
 
     @Test
     @DisplayName("멤버의 이메일로 시작날짜와 종료날짜 사이에 있는 모든 고정일정 자식일정들을 조회한다.")
-    void findAllByEmailBetweenStartAndEnd(){
+    void findAllByMemberEmailBetweenStartAndEnd(){
         //given
         String email = "normal2@example.com";
         LocalDateTime start = LocalDateTime.of(2024, 2, 1, 0, 0);
         LocalDateTime end = LocalDateTime.of(2024, 2, 28, 0, 0);
 
         //when
-        List<FScheduleDetail> fDetails = fScheduleDetailRepository.findAllByEmailBetweenStartAndEnd(email, start, end);
+        List<FScheduleDetail> fDetails = fScheduleDetailRepository.findAllByMemberEmailBetweenStartAndEnd(email, start, end);
 
         //then
         assertThat(fDetails).hasSize(5);
@@ -137,14 +137,14 @@ public class FScheduleDetailRepositoryTest {
 
     @Test
     @DisplayName("시작날짜 이후의 모든 고정일정들을 자식일정을 멤버의 이메일과, 부모일정의 id로 조회한다.")
-    void findAllByEmailAndParentIdGEStartDate(){
+    void findAllByMemberEmailAndParentIdGEStart(){
         //given
         String email = "normal2@example.com";
         Long parentId = 2L;
         LocalDateTime start = LocalDateTime.of(2024, 2, 1, 0, 0);
 
         //when
-        List<FScheduleDetail> fDetails = fScheduleDetailRepository.findAllByEmailAndParentIdGEStartDate(email, parentId, start);
+        List<FScheduleDetail> fDetails = fScheduleDetailRepository.findAllByMemberEmailAndParentIdGEStart(email, parentId, start);
 
         //then
         assertThat(fDetails).hasSizeGreaterThan(1);

@@ -76,7 +76,7 @@ public class FScheduleDetailService {
     @Transactional
     public void deleteByMemberAndParentIdGEStartDate(Member member, Long parentId, LocalDateTime start) {
         List<FScheduleDetail> fScheduleDetails = fScheduleDetailRepository
-                .findAllByEmailAndParentIdGEStartDate(member.getEmail(), parentId, start);
+                .findAllByMemberEmailAndParentIdGEStart(member.getEmail(), parentId, start);
 
         fScheduleDetailRepository.deleteAllByIds(fScheduleDetails.stream()
                 .map(FScheduleDetail::getId)

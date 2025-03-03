@@ -12,11 +12,8 @@ public interface FScheduleDetailRepository {
     void update(FScheduleDetail fScheduleDetail);
     void deleteById(Long id);
     void deleteAllByIds(List<Long> ids);
-
     Optional<FScheduleDetail> findById(Long id);
-
-    List<FScheduleDetail> findAllByEmailBetweenStartAndEnd(String email, LocalDateTime startDateTime, LocalDateTime endDateTime);
-    List<FScheduleDetail> findAllByEmailAndParentIdGEStartDate(String email, Long parentId, LocalDateTime start);
-
+    List<FScheduleDetail> findAllByMemberEmailBetweenStartAndEnd(String email, LocalDateTime startDateTime, LocalDateTime endDateTime);
+    List<FScheduleDetail> findAllByMemberEmailAndParentIdGEStart(String email, Long parentId, LocalDateTime start);
     List<FDetailWithParent> findAllWithParentByMemberEmail(String email);
 }

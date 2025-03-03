@@ -7,7 +7,7 @@ import com.eighttoten.schedule.domain.fschedule.FSchedule;
 import com.eighttoten.schedule.domain.fschedule.FScheduleUpdate;
 import com.eighttoten.schedule.domain.fschedule.NewFSchedule;
 import com.eighttoten.schedule.domain.fschedule.repository.FScheduleRepository;
-import com.eighttoten.schedule.service.fschedule.repository.FScheduleRepositoryImpl;
+import com.eighttoten.schedule.fschedule.repository.FScheduleRepositoryImpl;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;

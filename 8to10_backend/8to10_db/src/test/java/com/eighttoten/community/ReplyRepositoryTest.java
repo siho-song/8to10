@@ -125,12 +125,12 @@ public class ReplyRepositoryTest {
 
     @Test
     @DisplayName("부모댓글의 id로 해당 댓글의 모든 대댓글들을 조회한다.")
-    void findNestedRepliesByParentId(){
+    void findAllByParentId(){
         //given
         Long parentId = 1L;
 
         //when
-        List<Reply> replies = replyRepository.findNestedRepliesByParentId(parentId);
+        List<Reply> replies = replyRepository.findAllByParentId(parentId);
 
         //then
         assertThat(replies.size()).isGreaterThan(1);

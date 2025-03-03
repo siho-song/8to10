@@ -1,5 +1,6 @@
 package com.eighttoten.auth;
 
+import com.eighttoten.auth.dto.AccessTokenResponse;
 import com.eighttoten.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

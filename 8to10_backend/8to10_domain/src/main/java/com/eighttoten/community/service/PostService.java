@@ -56,8 +56,8 @@ public class PostService {
         List<Long> replyIds = replies.stream().map(Reply::getId).toList();
 
         member.checkIsSameEmail(post.getCreatedBy());
-        postHeartRepository.deleteHeartsByPostId(id);
-        postScrapRepository.deleteScrapsByPostId(id);
+        postHeartRepository.deleteAllByPostId(id);
+        postScrapRepository.deleteAllByPostId(id);
         replyHeartRepository.deleteAllByReplyIds(replyIds);
         replyRepository.deleteByReplyIds(replyIds);
         postRepository.deleteById(id);
