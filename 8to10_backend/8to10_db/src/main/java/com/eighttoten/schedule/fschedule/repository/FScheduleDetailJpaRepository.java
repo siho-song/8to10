@@ -25,6 +25,8 @@ public interface FScheduleDetailJpaRepository extends JpaRepository<FScheduleDet
                                                                        @Param(value = "end") LocalDateTime end);
 
     @EntityGraph(attributePaths = "fScheduleEntity")
-    @Query("select fd from FScheduleDetailEntity fd where fd.createdBy = :memberEmail")
-    List<FScheduleDetailEntity> findAllWithParentByMemberEmail(@Param(value = "memberEmail") String memberEmail);
+    @Query("select fd from FScheduleDetailEntity fd where fd.startDateTime >= :start and fd.endDateTime <= :end and fd.createdBy = :memberEmail")
+    List<FScheduleDetailEntity> findAllWithParentByMemberEmailInPeriod(@Param(value = "memberEmail") String memberEmail,
+                                                                       @Param(value = "start") LocalDateTime start,
+                                                                       @Param(value = "end") LocalDateTime end);
 }

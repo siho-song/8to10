@@ -108,13 +108,15 @@ public class FScheduleDetailRepositoryTest {
     }
 
     @Test
-    @DisplayName("멤버의 이메일로 모든 고정일정 자식일정들을 부모일정과 함께 조회한다.")
-    void findAllWithParentByMemberEmail(){
+    @DisplayName("멤버의 이메일로 3개월 내 모든 고정일정 자식일정들을 부모일정과 함께 조회한다.")
+    void findAllWithParentByMemberEmailInPeriod(){
         //given
         String email = "normal2@example.com";
+        LocalDateTime end = LocalDateTime.of(2024, 2, 15, 0, 0);
+        LocalDateTime start = end.minusMonths(3);
 
         //when
-        List<FDetailWithParent> fDetails = fScheduleDetailRepository.findAllWithParentByMemberEmail(email);
+        List<FDetailWithParent> fDetails = fScheduleDetailRepository.findAllWithParentByMemberEmailInPeriod(email, start, end);
 
         //then
         assertThat(fDetails).hasSize(5);
@@ -122,14 +124,14 @@ public class FScheduleDetailRepositoryTest {
 
     @Test
     @DisplayName("멤버의 이메일로 시작날짜와 종료날짜 사이에 있는 모든 고정일정 자식일정들을 조회한다.")
-    void findAllByMemberEmailBetweenStartAndEnd(){
+    void findAllByMemberEmailInPeriod(){
         //given
         String email = "normal2@example.com";
         LocalDateTime start = LocalDateTime.of(2024, 2, 1, 0, 0);
         LocalDateTime end = LocalDateTime.of(2024, 2, 28, 0, 0);
 
         //when
-        List<FScheduleDetail> fDetails = fScheduleDetailRepository.findAllByMemberEmailBetweenStartAndEnd(email, start, end);
+        List<FScheduleDetail> fDetails = fScheduleDetailRepository.findAllByMemberEmailInPeriod(email, start, end);
 
         //then
         assertThat(fDetails).hasSize(5);

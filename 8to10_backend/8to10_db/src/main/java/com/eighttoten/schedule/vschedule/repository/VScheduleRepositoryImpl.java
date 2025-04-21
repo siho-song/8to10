@@ -47,14 +47,14 @@ public class VScheduleRepositoryImpl implements VScheduleRepository {
     }
 
     @Override
-    public List<VSchedule> findAllByMemberEmail(String memberEmail) {
+    public List<VSchedule> findAllByEmailInPeriod(String memberEmail) {
         List<VScheduleEntity> entities = vScheduleRepository.findAllByMemberEmail(memberEmail);
         return entities.stream().map(VScheduleEntity::toVSchedule).toList();
     }
 
     @Override
-    public List<VSchedule> findAllByMemberEmailBetweenStartAndEnd(String email, LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        List<VScheduleEntity> entities = vScheduleRepository.findAllByMemberEmailBetweenStartAndEnd(email, startDateTime, endDateTime);
+    public List<VSchedule> findAllByMemberEmailInPeriod(String email, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        List<VScheduleEntity> entities = vScheduleRepository.findAllByMemberEmailInPeriod(email, startDateTime, endDateTime);
         return entities.stream().map(VScheduleEntity::toVSchedule).toList();
     }
 }

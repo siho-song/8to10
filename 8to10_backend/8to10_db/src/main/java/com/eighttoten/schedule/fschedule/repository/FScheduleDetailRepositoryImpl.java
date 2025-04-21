@@ -52,7 +52,7 @@ public class FScheduleDetailRepositoryImpl implements FScheduleDetailRepository 
     }
 
     @Override
-    public List<FScheduleDetail> findAllByMemberEmailBetweenStartAndEnd(String memberEmail, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+    public List<FScheduleDetail> findAllByMemberEmailInPeriod(String memberEmail, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         List<FScheduleDetailEntity> entities = fScheduleDetailRepository.findAllByMemberEmailBetweenStartAndEnd(memberEmail,
                 startDateTime, endDateTime);
         return entities.stream().map(FScheduleDetailEntity::toFScheduleDetail).toList();
@@ -70,9 +70,9 @@ public class FScheduleDetailRepositoryImpl implements FScheduleDetailRepository 
     }
 
     @Override
-    public List<FDetailWithParent> findAllWithParentByMemberEmail(String email) {
-        List<FScheduleDetailEntity> entities = fScheduleDetailRepository.findAllWithParentByMemberEmail(
-                email);
+    public List<FDetailWithParent> findAllWithParentByMemberEmailInPeriod(String email, LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        List<FScheduleDetailEntity> entities = fScheduleDetailRepository.findAllWithParentByMemberEmailInPeriod(
+                email, startDateTime, endDateTime);
         return entities.stream().map(FScheduleDetailEntity::toFDetailWithParent).toList();
     }
 }
