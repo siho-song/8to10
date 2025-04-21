@@ -17,7 +17,7 @@ public interface NScheduleDetailRepository {
     Optional<NDetailWithParent> findByIdWithParent(Long id);
     List<NScheduleDetail> findAllByIds(List<Long> ids);
     List<NScheduleDetail> findAllByMemberEmailAndDate(String email, LocalDate date);
-    List<NScheduleDetail> findAllByMemberEmailBetweenStartAndEnd(String email, LocalDateTime startDateTime, LocalDateTime endDateTime);
+    List<NScheduleDetail> findAllByMemberEmailInPeriod(String email, LocalDateTime startDateTime, LocalDateTime endDateTime);
     List<NScheduleDetail> findAllByMemberEmailAndParentIdGEStart(String email, Long parentId, LocalDateTime start);
-    List<NDetailWithParent> findAllWithParentByMemberEmail(String email);
+    List<NDetailWithParent> findAllWithParentByMemberEmailInPeriod(String email, LocalDateTime startDateTime, LocalDateTime endDateTime);
 }

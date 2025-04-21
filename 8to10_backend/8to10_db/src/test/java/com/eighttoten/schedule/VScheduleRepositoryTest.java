@@ -90,23 +90,23 @@ public class VScheduleRepositoryTest {
 
     @Test
     @DisplayName("시작날짜와 종료날짜 사이에 있는 모든 변동일정을 조회한다.")
-    void findAllByMemberEmailBetweenStartAndEnd(){
+    void findAllByEmailInPeriodBetweenStartAndEnd(){
         //given
         String email = "normal@example.com";
         LocalDateTime start = LocalDateTime.of(2024, 7, 1, 0, 0);
         LocalDateTime end = LocalDateTime.of(2024, 11, 1, 0, 0);
 
         //when,then
-        assertThat(vScheduleRepository.findAllByMemberEmailBetweenStartAndEnd(email, start, end).size()).isGreaterThan(1);
+        assertThat(vScheduleRepository.findAllByMemberEmailInPeriod(email, start, end).size()).isGreaterThan(1);
     }
 
     @Test
     @DisplayName("멤버의 이메일로 모든 변동일정을 조회한다.")
-    void findAllByMemberEmail(){
+    void findAllByEmailInPeriod(){
         //given
         String email = "normal@example.com";
 
         //when,then
-        assertThat(vScheduleRepository.findAllByMemberEmail(email).size()).isGreaterThan(1);
+        assertThat(vScheduleRepository.findAllByEmailInPeriod(email).size()).isGreaterThan(1);
     }
 }

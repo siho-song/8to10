@@ -169,30 +169,33 @@ public class NScheduleDetailRepositoryTest {
 
     @Test
     @DisplayName("멤버의 이메일로 시작날짜와 종료날짜 사이에 있는 모든 일반일정 자식일정들을 조회한다.")
-    void findAllByMemberEmailBetweenStartAndEnd(){
+    void findAllByMemberEmailInPeriod(){
         //given
         String email = "normal2@example.com";
         LocalDateTime start = LocalDateTime.of(2024, 6, 1, 0, 0);
         LocalDateTime end = LocalDateTime.of(2024, 6, 7, 0, 0);
 
         //when
-        List<NScheduleDetail> nDetails = nScheduleDetailRepository.findAllByMemberEmailBetweenStartAndEnd(email, start, end);
+        List<NScheduleDetail> nDetails = nScheduleDetailRepository.findAllByMemberEmailInPeriod(email, start, end);
 
         //then
         assertThat(nDetails).hasSize(6);
     }
 
     @Test
-    @DisplayName("멤버의 이메일로 모든 일반일정 자식일정들을 부모일정과 함께 조회한다.")
-    void findAllWithParentByMemberEmail(){
+    @DisplayName("멤버의 이메일로 3개월 내 모든 일반일정 자식일정들을 부모일정과 함께 조회한다.")
+    void findAllWithParentByMemberEmailInPeriod(){
         //given
         String email = "normal2@example.com";
+        LocalDateTime end = LocalDateTime.of(2024, 6, 6, 0, 0, 0);
+        LocalDateTime start = end.minusMonths(3);
 
         //when
-        List<NDetailWithParent> nDetails = nScheduleDetailRepository.findAllWithParentByMemberEmail(email);
+        List<NDetailWithParent> nDetails = nScheduleDetailRepository.findAllWithParentByMemberEmailInPeriod(email, start,
+                end);
 
         //then
-        assertThat(nDetails).isNotEmpty();
+        assertThat(nDetails).hasSize(6);
         assertThat(nDetails.get(0).getNSchedule().getTitle()).isNotNull();
     }
 }

@@ -9,9 +9,9 @@ import org.springframework.data.repository.query.Param;
 
 public interface VScheduleJpaRepository extends JpaRepository<VScheduleEntity, Long> {
     @Query("select v from VScheduleEntity v where v.startDateTime >= :startDateTime and v.endDateTime <= :endDateTime and v.createdBy = :memberEmail")
-    List<VScheduleEntity> findAllByMemberEmailBetweenStartAndEnd(@Param(value = "memberEmail") String memberEmail,
-                                                                 @Param(value = "startDateTime") LocalDateTime startDateTime,
-                                                                 @Param(value = "endDateTime") LocalDateTime endDateTime);
+    List<VScheduleEntity> findAllByMemberEmailInPeriod(@Param(value = "memberEmail") String memberEmail,
+                                                       @Param(value = "startDateTime") LocalDateTime startDateTime,
+                                                       @Param(value = "endDateTime") LocalDateTime endDateTime);
 
     @Query("select v from VScheduleEntity v where v.createdBy = :memberEmail")
     List<VScheduleEntity> findAllByMemberEmail(@Param(value = "memberEmail") String memberEmail);

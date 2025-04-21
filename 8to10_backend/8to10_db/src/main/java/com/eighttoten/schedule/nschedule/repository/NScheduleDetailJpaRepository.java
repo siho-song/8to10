@@ -33,11 +33,13 @@ public interface NScheduleDetailJpaRepository extends JpaRepository<NScheduleDet
     List<NScheduleDetailEntity> findAllByIds(@Param(value = "ids") List<Long> ids);
 
     @Query("select nd from NScheduleDetailEntity nd where nd.startDateTime >= :startDateTime and nd.endDateTime <= :endDateTime and nd.createdBy = :memberEmail")
-    List<NScheduleDetailEntity> findAllByMemberEmailBetweenStartAndEnd(@Param(value = "memberEmail") String memberEmail,
-                                                                       @Param(value = "startDateTime") LocalDateTime startDateTime,
-                                                                       @Param(value = "endDateTime") LocalDateTime endDateTime);
+    List<NScheduleDetailEntity> findAllByMemberEmailInPeriod(@Param(value = "memberEmail") String memberEmail,
+                                                             @Param(value = "startDateTime") LocalDateTime startDateTime,
+                                                             @Param(value = "endDateTime") LocalDateTime endDateTime);
 
     @EntityGraph(attributePaths = "nScheduleEntity")
-    @Query("select nd from NScheduleDetailEntity nd where nd.createdBy = :memberEmail")
-    List<NScheduleDetailEntity> findAllWithParentByMemberEmail(@Param(value = "memberEmail") String memberEmail);
+    @Query("select nd from NScheduleDetailEntity nd where nd.startDateTime >= :startDateTime and nd.endDateTime <= :endDateTime and nd.createdBy = :memberEmail")
+    List<NScheduleDetailEntity> findAllWithParentByMemberEmailInPeriod(@Param(value = "memberEmail") String memberEmail,
+                                                                       @Param(value = "startDateTime") LocalDateTime startDateTime,
+                                                                        @Param(value = "endDateTime") LocalDateTime endDateTime);
 }
