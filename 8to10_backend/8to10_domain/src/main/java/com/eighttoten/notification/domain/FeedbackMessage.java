@@ -7,6 +7,7 @@ import com.eighttoten.member.domain.Mode;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import lombok.Getter;
 
 @Getter
@@ -248,7 +249,7 @@ public enum FeedbackMessage {
                 .toList();
 
         if (!filteredMessages.isEmpty()) {
-            int randomIndex = new Random().nextInt(filteredMessages.size());
+            int randomIndex = ThreadLocalRandom.current().nextInt(filteredMessages.size());
             return filteredMessages.get(randomIndex);
         }
         return null;

@@ -7,7 +7,7 @@ import lombok.Getter;
 public abstract class PostStatsUpdateEvent {
     protected final Long postId;
 
-    public PostStatsUpdateEvent(Long id) {
+    protected PostStatsUpdateEvent(Long id) {
         this.postId = id;
     }
 

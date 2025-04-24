@@ -2,6 +2,7 @@ package com.eighttoten.community;
 
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import com.eighttoten.common.Pagination;
@@ -23,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -38,8 +40,8 @@ public class PostController {
     private final PostHeartService postHeartService;
     private final PostScrapService postScrapService;
 
-    @GetMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<PageResponse<PostPreviewResponse>> getPostPage(@Valid PostPageRequest request)
+    @GetMapping(produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<PageResponse<PostPreviewResponse>> getPostPage(@Valid @ModelAttribute PostPageRequest request)
     {
         Pagination<PostPreview> postPreviews = postService.searchPostPreviewPages(request.toSearchPostPage());
         List<PostPreviewResponse> postPreviewResponses = postPreviews.getContents().stream().map(PostPreviewResponse::from).toList();

@@ -2,9 +2,10 @@ package com.eighttoten.member.validator;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import java.util.regex.Pattern;
 
 public class NicknameValidator implements ConstraintValidator<Nickname,String> {
-    private static final String NICKNAME_PATTERN = "^[가-힣a-zA-Z0-9_.]+$";
+    private static final Pattern NICKNAME_PATTERN = Pattern.compile("^[가-힣a-zA-Z0-9]+$");
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
@@ -12,14 +13,10 @@ public class NicknameValidator implements ConstraintValidator<Nickname,String> {
             return true;
         }
 
-        if (!value.matches(NICKNAME_PATTERN)) {
-            return false;
-        }
-
-        if (value.matches(".*[가-힣]+.*")) {
+        if (NICKNAME_PATTERN.matcher(value).matches()) {
             return value.length() >= 2 && value.length() <= 12;
         } else {
-            return value.length() <= 20;
+            return false;
         }
     }
 }

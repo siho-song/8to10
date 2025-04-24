@@ -3,7 +3,7 @@ package com.eighttoten.notification.service;
 import static com.eighttoten.exception.ExceptionCode.INVALID_REDIS_MESSAGE;
 
 import com.eighttoten.exception.ExceptionCode;
-import com.eighttoten.exception.InvalidRedisMessageException;
+import com.eighttoten.exception.InternalException;
 import com.eighttoten.exception.NotFoundEntityException;
 import com.eighttoten.member.domain.Member;
 import com.eighttoten.member.domain.MemberRepository;
@@ -67,7 +67,7 @@ public class RedisMessageSubscriber {
             return objectMapper.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
             log.error(e.getMessage(), e);
-            throw new InvalidRedisMessageException(INVALID_REDIS_MESSAGE);
+            throw new InternalException(INVALID_REDIS_MESSAGE);
         }
     }
 
@@ -76,7 +76,7 @@ public class RedisMessageSubscriber {
             return objectMapper.readValue(message.getBytes(), classType);
         } catch (IOException e) {
             log.error(e.getMessage(), e);
-            throw new InvalidRedisMessageException(INVALID_REDIS_MESSAGE);
+            throw new InternalException(INVALID_REDIS_MESSAGE);
         }
     }
 }

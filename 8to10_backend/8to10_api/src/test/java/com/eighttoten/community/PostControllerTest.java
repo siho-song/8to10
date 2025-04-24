@@ -41,22 +41,15 @@ class PostControllerTest {
     @Test
     @DisplayName("게시글 페이지 조회에 성공한다.")
     void searchPostPreviewPage() throws Exception {
-        //given
-        Map<String, Object> request = new HashMap<>();
-        request.put("keyword", "nick3");
-        request.put("searchCond", "WRITER");
-        request.put("sortCond", "LIKE");
-        request.put("sortDirection", "DESC");
-        request.put("pageNum", 1);
-        request.put("pageSize", 10);
-
-        String body = new ObjectMapper().writeValueAsString(request);
-
         //when
         ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/community/post")
                 .header("Authorization", "Bearer " + token)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(body));
+                .param("keyword", "nick3")
+                .param("searchCond", "WRITER")
+                .param("sortCond", "LIKE")
+                .param("sortDirection", "DESC")
+                .param("pageNum", "1")
+                .param("pageSize", "10"));
 
         //then
         result.andExpect(status().isOk()) // HTTP 200 OK 검증

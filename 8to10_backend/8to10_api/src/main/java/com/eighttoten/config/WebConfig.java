@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
     private final AuthAccessor authAccessor;
 
-    public static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
+    private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
             "classpath:/static/",
             "classpath:/",
             "classpath:/resources/",

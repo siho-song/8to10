@@ -57,6 +57,7 @@ public enum ExceptionCode {
 
     INVALID_REDIS_MESSAGE(9001, "유효하지 않은 Redis Message 입니다."),
     FAILED_SSE_NOTIFICATION_SEND(9002, "알림전송에 실패하였습니다."),
+    FAILED_FILE_DELETE(9100,"파일 삭제 실패"),
     INTERNAL_SERVER_ERROR(9999,"서버 내부 오류");
 
     private final int code;

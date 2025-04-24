@@ -1,5 +1,7 @@
 package com.eighttoten.schedule.dto.response;
 
+import com.eighttoten.exception.BadRequestException;
+import com.eighttoten.exception.BusinessException;
 import com.eighttoten.exception.ExceptionCode;
 import com.eighttoten.schedule.domain.ScheduleAble;
 import com.eighttoten.schedule.domain.fschedule.FDetailWithParent;
@@ -32,7 +34,7 @@ public abstract class ScheduleResponse {
             return new VScheduleResponse((VSchedule) scheduleAble);
         }
         else {
-            throw new RuntimeException(ExceptionCode.INTERNAL_SERVER_ERROR.getMessage());
+            throw new BusinessException(ExceptionCode.INTERNAL_SERVER_ERROR);
         }
     }
 }
