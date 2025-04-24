@@ -71,7 +71,7 @@ public class GlobalControllerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity<ErrorResponse> handleException(Exception e) {
         log.error(e.getMessage(), e);
         return ResponseEntity.internalServerError()
-                .body(ErrorResponse.of(INTERNAL_SERVER_ERROR.getCode(), INTERNAL_SERVER_ERROR.getMessage()));
+                .body(ErrorResponse.of(INTERNAL_SERVER_ERROR.getCode(), e.getMessage()));
     }
 
     private String createErrorMessage(BindingResult bindingResult) {

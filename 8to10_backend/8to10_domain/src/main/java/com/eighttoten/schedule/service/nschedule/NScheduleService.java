@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -115,7 +116,7 @@ public class NScheduleService {
         List<DayOfWeek> selectableDays = candidateDays.stream()
                 .filter(availableDays::contains)
                 .collect(Collectors.toList());
-        Collections.shuffle(selectableDays, new Random());
+        Collections.shuffle(selectableDays, ThreadLocalRandom.current());
         return selectableDays.subList(0, Math.min(numberOfDays, selectableDays.size()));
     }
 

@@ -25,21 +25,21 @@ public class SignUpService {
         memberRepository.save(newMember);
     }
 
-    public Boolean isDuplicatedEmail(String email){
+    public boolean isDuplicatedEmail(String email){
         Member memberEntity = memberRepository.findByEmail(email)
                 .orElse(null);
 
         return memberEntity != null;
     }
 
-    public Boolean isDuplicatedNickname(String nickname){
+    public boolean isDuplicatedNickname(String nickname){
         Member member = memberRepository.findByNickname(nickname)
                 .orElse(null);
 
         return member != null;
     }
 
-    private Boolean isValidSignUp(NewMember newMember) {
+    private boolean isValidSignUp(NewMember newMember) {
         return !isDuplicatedEmail(newMember.getEmail()) && !isDuplicatedNickname(newMember.getNickname());
     }
 }

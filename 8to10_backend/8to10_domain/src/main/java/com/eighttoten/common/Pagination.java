@@ -13,6 +13,6 @@ public class Pagination<T> {
     private Long totalElements;
 
     public long getTotalPages(){
-        return totalElements / pageSize; // TODO 반올림
+        return totalElements / pageSize;
     }
 }

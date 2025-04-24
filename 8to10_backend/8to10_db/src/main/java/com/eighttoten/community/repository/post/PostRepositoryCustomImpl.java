@@ -70,7 +70,7 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
         Long totalElements = query
                 .select(qPost.count())
                 .from(qPost)
-                .leftJoin(qPost.memberEntity, qMember) //TODO member 조인하는 이유?
+                .leftJoin(qPost.memberEntity, qMember)
                 .where(containTitle(searchCond, keyword),
                         containContents(searchCond, keyword),
                         containWriter(searchCond, keyword))

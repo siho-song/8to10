@@ -1,5 +1,7 @@
 package com.eighttoten.common;
 
+import com.eighttoten.exception.BusinessException;
+import com.eighttoten.exception.ExceptionCode;
 import jakarta.annotation.PostConstruct;
 import java.time.LocalTime;
 import lombok.AccessLevel;
@@ -15,10 +17,10 @@ public final class AppConstant {
     @PostConstruct
     void init(){
         if(AppConstant.WORK_START_TIME.isAfter(AppConstant.WORK_END_TIME)){
-            throw new RuntimeException("WORK_START_TIME 은 WORK_END_TIME 보다 이전이어야 합니다.");
+            throw new BusinessException(ExceptionCode.INTERNAL_SERVER_ERROR);
         }
         if(AppConstant.WORK_END_TIME.equals(AppConstant.WORK_START_TIME)){
-            throw new RuntimeException("WORK_END_TIME 은 WORK_START_TIME 보다 이후여야 합니다.");
+            throw new BusinessException(ExceptionCode.INTERNAL_SERVER_ERROR);
         }
     }
 }

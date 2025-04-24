@@ -39,8 +39,8 @@ public class NScheduleCreateInfo {
     }
 
     public Duration getNecessaryTime() {
-        long hour = bufferTime.getHour() + performInDay.getHour();
-        long minute = bufferTime.getMinute() + performInDay.getMinute();
+        long hour = (long) bufferTime.getHour() + performInDay.getHour();
+        long minute = (long) bufferTime.getMinute() + performInDay.getMinute();
         if(minute >= 60) {
             hour += minute / 60;
             minute = minute % 60;

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class AuthFilterExceptionHandler {
 
-    private final int NO_CODE = 0;
+    private static final int NO_CODE = 0;
 
     private final ObjectMapper objectMapper;
 

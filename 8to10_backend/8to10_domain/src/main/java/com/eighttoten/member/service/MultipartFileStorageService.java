@@ -2,8 +2,12 @@ package com.eighttoten.member.service;
 
 import com.eighttoten.exception.BadRequestException;
 import com.eighttoten.exception.ExceptionCode;
+import com.eighttoten.exception.InternalException;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,9 +40,13 @@ public class MultipartFileStorageService {
     }
 
     public void deleteFile(String filePath) {
-        File file = new File(filePath);
-        if(file.exists()){
-            file.delete();
+        Path path = Paths.get(filePath);
+        if (Files.exists(path)) {
+            try {
+                Files.delete(path);
+            } catch (IOException e) {
+                throw new InternalException(ExceptionCode.FAILED_FILE_DELETE);
+            }
         }
     }
 

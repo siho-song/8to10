@@ -2,7 +2,7 @@ package com.eighttoten.notification.service;
 
 import static com.eighttoten.exception.ExceptionCode.INVALID_REDIS_MESSAGE;
 
-import com.eighttoten.exception.InvalidRedisMessageException;
+import com.eighttoten.exception.InternalException;
 import com.eighttoten.notification.event.NotificationEvent;
 import com.eighttoten.support.MessagePublisher;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -28,7 +28,7 @@ public class AsyncNotificationEventHandler {
             messagePublisher.send(channelMessage);
         } catch (JsonProcessingException e) {
             log.error(e.getMessage(), e);
-            throw new InvalidRedisMessageException(INVALID_REDIS_MESSAGE);
+            throw new InternalException(INVALID_REDIS_MESSAGE);
         }
     }
 }

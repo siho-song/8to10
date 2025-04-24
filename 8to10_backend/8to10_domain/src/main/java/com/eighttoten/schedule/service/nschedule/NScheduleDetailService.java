@@ -89,7 +89,7 @@ public class NScheduleDetailService {
     @Transactional
     public void deleteById(Member member, Long id) {
         NDetailWithParent nScheduleDetail = nScheduleDetailRepository.findByIdWithParent(id)
-                .orElseThrow(() -> new NotFoundEntityException(NOT_FOUND_N_DETAIL));;
+                .orElseThrow(() -> new NotFoundEntityException(NOT_FOUND_N_DETAIL));
 
         member.checkIsSameEmail(nScheduleDetail.getCreatedBy());
         NSchedule parent = nScheduleDetail.getNSchedule();

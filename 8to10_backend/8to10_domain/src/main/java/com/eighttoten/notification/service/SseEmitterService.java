@@ -34,7 +34,7 @@ public class SseEmitterService {
 
         emitter.onCompletion(() -> sseEmitterRepository.deleteById(uniqueEmitterId));
         emitter.onTimeout(() -> sseEmitterRepository.deleteById(uniqueEmitterId));
-        emitter.onError((e) -> sseEmitterRepository.deleteById(uniqueEmitterId));
+        emitter.onError(e -> sseEmitterRepository.deleteById(uniqueEmitterId));
 
         sendToClient(emitter,uniqueEmitterId,"init","init");
 

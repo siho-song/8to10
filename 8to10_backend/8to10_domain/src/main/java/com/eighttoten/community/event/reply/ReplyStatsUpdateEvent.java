@@ -7,7 +7,7 @@ import lombok.Getter;
 public abstract class ReplyStatsUpdateEvent {
     protected final Long replyId;
 
-    public ReplyStatsUpdateEvent(Long replyId) {
+    protected ReplyStatsUpdateEvent(Long replyId) {
         this.replyId = replyId;
     }
 
