@@ -50,7 +50,7 @@ const MyReplies = ({onBack, closeModal}) => {
                             <button
                                 key={reply.replyId}
                                 className="myreply-link"
-                                onClick={() => handleReplyClick(`/community/board/${reply.boardId}`, reply.replyId)}
+                                onClick={() => handleReplyClick(`/community/post/${reply.boardId}`, reply.replyId)}
                             >
                                 <div className="myreply-content">
                                     <p className="myreply-contents">

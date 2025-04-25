@@ -54,9 +54,9 @@ authenticatedApi.interceptors.response.use((response) => {
     }
 
     if (response && response.data) {
-        throw new CustomErrors(response.status, response.data.code, response.data.message);
+        return Promise.resolve(new CustomErrors(response.status, response.data.code, response.data.message));
     } else {
-        throw new CustomErrors(0, 'NETWORK_ERROR', '네트워크 오류가 발생했습니다.');
+        return Promise.resolve(new CustomErrors(0, 'NETWORK_ERROR', '네트워크 오류가 발생했습니다.'));
     }
 });
 

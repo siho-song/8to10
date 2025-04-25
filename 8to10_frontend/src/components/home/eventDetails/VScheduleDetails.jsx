@@ -12,6 +12,7 @@ import {
     validateTitle
 } from "@/components/home/eventDetails/ValidateEventDetails.js";
 import {EVENT_DETAILS_VALIDATE_MESSAGE} from "@/constants/ScheduleValidateMessage.js";
+import {isSuccess} from "@/helpers/AxiosHelper.js";
 
 const VScheduleDetails = ({selectedEvent, onClose}) => {
 
@@ -54,16 +55,16 @@ const VScheduleDetails = ({selectedEvent, onClose}) => {
     }, [selectedEvent]);
 
     const handleDelete = async () => {
-        try {
-            const url = `/schedule/${selectedEvent.id}`;
-            const response = await authenticatedApi.delete(
-                url,
-                {apiEndPoint: API_ENDPOINT_NAMES.DELETE_SCHEDULE,},
-            )
+        const url = `/schedule/variable/${selectedEvent.extendedProps.originId}`;
+        const response = await authenticatedApi.delete(
+            url,
+            {apiEndPoint: API_ENDPOINT_NAMES.DELETE_SCHEDULE,},
+        )
+        if (await isSuccess(response)) {
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.DELETE_SUCCESS);
             deleteEvent(selectedEvent.id);
             onClose();
-        } catch(e) {
+        } else {
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.DELETE_FAIL);
         }
     }
@@ -139,31 +140,29 @@ const VScheduleDetails = ({selectedEvent, onClose}) => {
     }
 
     const handleDescriptionEditSubmit = async () => {
-        try {
-            const startDateTime = createLocalDateTime(startDate);
-            const endDateTime = createLocalDateTime(endDate);
+        const startDateTime = createLocalDateTime(startDate);
+        const endDateTime = createLocalDateTime(endDate);
 
-            const url = "/schedule/variable";
-            const respones = await authenticatedApi.put(
-                url,
-                {
-                    id: selectedEvent.id,
-                    title: title,
-                    commonDescription: commonDescription,
-                    startDate: startDateTime,
-                    endDate: endDateTime,
-                },
-                {apiEndPoint: API_ENDPOINT_NAMES.EDIT_V_SCHEDULE,},
-            )
-
+        const url = "/schedule/variable";
+        const response = await authenticatedApi.put(
+            url,
+            {
+                id: selectedEvent.extendedProps.originId,
+                title: title,
+                commonDescription: commonDescription,
+                startDateTime: startDateTime,
+                endDateTime: endDateTime,
+            },
+            {apiEndPoint: API_ENDPOINT_NAMES.EDIT_V_SCHEDULE,},
+        )
+        if (await isSuccess(response)) {
             updateExtendedProps(selectedEvent.id, ['commonDescription'], [commonDescription]);
             setHasCommonDescription(commonDescription.length > 0);
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.MEMO_SUCCESS);
             setIsDescriptionEditMode(false);
-        } catch (e) {
+        } else {
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.MEMO_FAIL);
         }
-
     }
 
     const handleEditSubmit = async () => {
@@ -181,29 +180,28 @@ const VScheduleDetails = ({selectedEvent, onClose}) => {
         if(!isStartDateBeforeEndDate(startDateTime, endDateTime, setDateObjectError)) {
             return;
         }
-        try {
-            const url = "/schedule/variable";
-            const response = await authenticatedApi.put(
-                url,
-                {
-                    id: selectedEvent.id,
-                    title: title,
-                    commonDescription: commonDescription,
-                    startDate: startDateTime,
-                    endDate: endDateTime,
-                },
-                {apiEndPoint: API_ENDPOINT_NAMES.EDIT_V_SCHEDULE,}
-            );
 
+        const url = "/schedule/variable";
+        const response = await authenticatedApi.put(
+            url,
+            {
+                id: selectedEvent.extendedProps.originId,
+                title: title,
+                commonDescription: commonDescription,
+                startDateTime: startDateTime,
+                endDateTime: endDateTime,
+            },
+            {apiEndPoint: API_ENDPOINT_NAMES.EDIT_V_SCHEDULE,}
+        );
+        if (await isSuccess(response)) {
             updateExtendedProps(selectedEvent.id, ['commonDescription'], [commonDescription]);
             updateProps(selectedEvent.id, ['title', 'start', 'end'], [title, startDateTime, endDateTime]);
             setHasCommonDescription(commonDescription.length > 0);
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.MODIFICATION_SUCCESS);
             setIsEditMode(false);
-        } catch (e) {
+        } else {
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.MODIFICATION_FAIL);
         }
-
     }
 
     return (
@@ -407,6 +405,7 @@ VScheduleDetails.propTypes = {
         extendedProps: PropTypes.shape({
             type: PropTypes.string.isRequired,
             commonDescription: PropTypes.string,
+            originId: PropTypes.number,
         }),
     }),
     onClose: PropTypes.func.isRequired,

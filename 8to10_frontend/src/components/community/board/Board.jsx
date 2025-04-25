@@ -4,7 +4,6 @@ import BoardHeader from "./BoardHeader.jsx";
 import PaginationComponent from "./Pagination.jsx";
 
 import '@/styles/community/Board.css';
-import LeftSideBar from "@/components/community/LeftSideBar.jsx";
 import authenticatedApi from "@/api/AuthenticatedApi.js";
 import {API_ENDPOINT_NAMES} from "@/constants/ApiEndPoints.js";
 
@@ -15,16 +14,17 @@ const Board = () => {
 
     const [boardState, setBoardState] = useState({
         sortCondition: 'DATE',
+        sortDirection: 'ASC',
         searchKeyword: '',
         searchCondition: 'TITLE',
         postsPerPage: 10,
-        pageNum: 0,
+        pageNum: 1,
         totalPages: 0
     });
 
     const setBoardField = (field, value) => {
         if (field === 'sortCondition' || field === 'postsPerPage') {
-            setBoardField('pageNum', 0);
+            setBoardField('pageNum', 1);
         }
 
         setBoardState(prevState => ({
@@ -44,24 +44,24 @@ const Board = () => {
         loadBoardData();
     };
 
+    // sort direction 뷰에 추가 필요함
     const loadBoardData = async () => {
 
         const params = new URLSearchParams({
             keyword: boardState.searchKeyword,
-            pageNum: boardState.pageNum,
-            pageSize: boardState.postsPerPage,
             searchCond: boardState.searchCondition,
             sortCond: boardState.sortCondition,
+            sortDirection: boardState.sortDirection,
+            pageNum: boardState.pageNum,
+            pageSize: boardState.postsPerPage,
         });
-
         try {
-            const url = `/community/board?${params.toString()}`;
+            const url = `/community/post?${params.toString()}`;
             const response = await authenticatedApi.get(url, {
                 apiEndPoint: API_ENDPOINT_NAMES.GET_BOARD_PAGING,
             });
             const data = response.data;
-
-            setPosts(data.content);
+            setPosts(data.contents);
             setBoardField('totalPages', data.totalPages);
         } catch (error) {
             console.error("Error : \n", error.toString());
@@ -71,7 +71,7 @@ const Board = () => {
 
     return (
         <div className="container" id="board-container">
-            <LeftSideBar />
+            {/*<LeftSideBar />*/}
 
             <div className="board-main-content">
                 <BoardHeader boardState={boardState} setBoardField={setBoardField} handleSearch={handleSearch}/>

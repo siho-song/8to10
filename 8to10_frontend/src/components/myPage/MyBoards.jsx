@@ -50,7 +50,7 @@ const MyBoards = ({onBack, closeModal}) => {
                             <button
                                 key={post.boardId}
                                 className="mypost-link"
-                                onClick={() => handlePostClick(`/community/board/${post.boardId}`)}
+                                onClick={() => handlePostClick(`/community/post/${post.boardId}`)}
                             >
                                 <h3 className="mypost-title">{post.title}</h3>
                                 <div className="mypost-meta">

@@ -15,10 +15,11 @@ import {
     validateTitle, validateTotalAmount
 } from "@/components/home/form/ScheduleForm/ValidateScheduleForm.js";
 import {EVENT_CREATE_VALIDATE_MESSAGE} from "@/constants/ScheduleValidateMessage.js";
+import {isSuccess} from "@/helpers/AxiosHelper.js";
 
 function NormalScheduleForm({ onClose }) {
 
-    const { addEvent } = useCalendar();
+    const { loadCalendarEvents } = useCalendar();
 
     const today = new Date();
 
@@ -74,8 +75,8 @@ function NormalScheduleForm({ onClose }) {
         const finalData = {
             title: formData.title,
             commonDescription: formData.commonDescription,
-            startDate: formData.startDate,
-            endDate: formData.endDate,
+            startDateTime: formData.startDate + "T00:00:00",
+            endDateTime: formData.endDate + "T00:00:00",
             bufferTime: formatDuration(formData.bufferHour, formData.bufferMinute),
             totalAmount: formData.totalAmount,
             performInDay: formatDuration(formData.performHour, formData.performMinute),
@@ -83,25 +84,18 @@ function NormalScheduleForm({ onClose }) {
             isIncludeSaturday: formData.includeSaturday,
             isIncludeSunday: formData.includeSunday
         };
-
-        try {
-            const url = '/schedule/normal';
-            const response = await authenticatedApi.post(
-                url,
-                finalData,
-                {
-                    apiEndPoint: API_ENDPOINT_NAMES.CREATE_N_SCHEDULE,
-                });
-            const data = response.data;
-
-            data.items.forEach(event => {
-                const formattedEvent = formatNormalSchedule(event);
-                addEvent(formattedEvent);
-            });
+        const url = '/schedule/normal';
+        const response = await authenticatedApi.post(
+            url,
+            finalData,
+            {
+                apiEndPoint: API_ENDPOINT_NAMES.CREATE_N_SCHEDULE,
+        });
+        if (await isSuccess(response)) {
+            await loadCalendarEvents();
             alert(EVENT_CREATE_VALIDATE_MESSAGE.SUBMIT_SUCCESS);
             onClose();
-
-        } catch (error) {
+        } else {
             alert(EVENT_CREATE_VALIDATE_MESSAGE.SUBMIT_NORMAL);
         }
     };
@@ -238,7 +232,7 @@ function NormalScheduleForm({ onClose }) {
     }
 
     return (
-        <div id="schedule-form-container" style={{padding: '20px'}}>
+        <div id="schedule-form-container">
             <h2 id="schedule-form-header">일반 일정 생성</h2>
             <form id="schedule-form" data-type="normal" onSubmit={handleSubmit}>
                 <div className="form-group">

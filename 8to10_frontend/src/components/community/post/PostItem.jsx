@@ -17,7 +17,7 @@ function PostItem({ post, email }) {
 
     const handleLikeClick = async () => {
         try {
-            const url = `/community/board/${post.id}/heart`;
+            const url = `/community/post/${post.id}/heart`;
             hasLike ? await authenticatedApi.delete(
                 url,
                 {
@@ -39,7 +39,7 @@ function PostItem({ post, email }) {
 
     const handleScrapClick = async () => {
         try {
-            const url = `/community/board/${post.id}/scrap`;
+            const url = `/community/post/${post.id}/scrap`;
             hasScrap ? await authenticatedApi.delete(
                 url,
                 {
@@ -61,7 +61,7 @@ function PostItem({ post, email }) {
 
     const handlePostDelete = async () => {
         try {
-            const url = `/community/board/${post.id}`;
+            const url = `/community/post/${post.id}`;
             await authenticatedApi.delete(
                 url,
                 {
@@ -78,34 +78,28 @@ function PostItem({ post, email }) {
     return (
         <div className="post-content">
             <div className="post-detail">
-
-                <div className="post-header-button">
-                    {email === post.writer &&
-                        <div id="edit-delete-controls" className="edit-delete-controls">
-                            <button onClick={() => {
-                                navigate(`/community/board/edit/${post.id}`, {
-                                    state: {
-                                        title: post.title,
-                                        contents: post.contents,
-                                    }
-                                })
-                            }}>수정
-                            </button>
-                            <button
-                                className="delete-button"
-                                onClick={handlePostDelete}
-                            >삭제
-                            </button>
-                        </div>
-                    }
-                    <button onClick={() => {
-                        navigate("/community/board")
-                    }}>글 목록
-                    </button>
-                </div>
-
                 <div className="post-header">
                     <h3 className="post-title">{post.title}</h3>
+                    <div className="post-header-button">
+                        {email === post.writer &&
+                            <div id="edit-delete-controls" className="edit-delete-controls">
+                                <button onClick={() => {
+                                    navigate(`/community/post/edit/${post.id}`, {
+                                        state: {
+                                            title: post.title,
+                                            contents: post.contents,
+                                        }
+                                    })
+                                }}>수정
+                                </button>
+                                <button
+                                    className="delete-button"
+                                    onClick={handlePostDelete}
+                                >삭제
+                                </button>
+                            </div>
+                        }
+                    </div>
                 </div>
 
                 <div className="post-info">
@@ -125,7 +119,6 @@ function PostItem({ post, email }) {
                         </span>
                     ))}
                 </p>
-
 
 
                 <div className="post-stats">
