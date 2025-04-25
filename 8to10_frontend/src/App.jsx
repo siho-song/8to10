@@ -16,6 +16,7 @@ import Post from "@/pages/Post.jsx";
 import BoardPost from "@/pages/BoardPost.jsx";
 import SignUpComplete from "@/components/signUp/SignUpComplete.jsx";
 import Achievement from "@/components/achievement/Achievement.jsx";
+import ErrorPage from "@/pages/ErrorPage.jsx";
 
 
 function App() {
@@ -36,13 +37,15 @@ function App() {
                             }
                         />
                         <Route path="/community/board" element={<Community />}/>
-                        <Route path="/community/board/add" element={<Post isEditMode={false}/>} />
-                        <Route path="/community/board/edit/:postId" element={<Post isEditMode={true}/>}/>
-                        <Route path="/community/board/:id" element={<BoardPost />}/>
+                        <Route path="/community/post/add" element={<Post isEditMode={false}/>} />
+                        <Route path="/community/post/edit/:postId" element={<Post isEditMode={true}/>}/>
+                        <Route path="/community/post/:id" element={<BoardPost />}/>
                         <Route path="/achievement" element={<Achievement />}/>
+                        <Route path="/error" element={<ErrorPage/>} />
                     </Route>
 
-                    <Route path="*" element={<Navigate to="/home" replace />} />
+                    {/*<Route path="*" element={<Navigate to="/home" replace />} />*/}
+                    <Route path="*" element={<Navigate to="/error" replace />} />
                 </Routes>
             </Router>
         </AuthProvider>
