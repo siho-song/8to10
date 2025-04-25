@@ -2,9 +2,9 @@ import {formatDate} from "@/helpers/TimeFormatter.js";
 
 export const generateEventIdWithParentId = (event) => {
     if (event.parentId) {
-        return `${event.parentId}-${event.id}`;
+        return `${event.type}-${event.parentId}-${event.id}`;
     }
-    return `${event.id}`;
+    return `${event.type}-${event.id}`;
 };
 
 export const parseEventIdWithParentId = (event) => {
@@ -28,11 +28,12 @@ export const formatNormalSchedule = (event) => {
     }
     return {
         id: generateEventIdWithParentId(event),
-        groupId: event.parentId,
+        groupId: `n${event.parentId}`,
         title: event.title,
-        start: event.start,
-        end: event.end,
-        color: event.color,
+        start: event.startDateTime,
+        end: event.endDateTime,
+        // color: event.color,
+        color: "#b1d0a9",
         extendedProps: {
             type: event.type,
             parentId: event.parentId,
@@ -51,14 +52,15 @@ export const formatNormalSchedule = (event) => {
 export const formatVariableSchedule = (event) => {
     return {
         id: generateEventIdWithParentId(event),
-        groupId: event.id,
+        groupId: `v${event.id}`,
         title: event.title,
-        start: event.start,
-        end: event.end,
-        color: event.color,
+        start: event.startDateTime,
+        end: event.endDateTime,
+        color: "#f5d0cc",
         extendedProps: {
             type: event.type,
             commonDescription: event.commonDescription,
+            originId: event.id,
         },
     };
 }
@@ -66,11 +68,12 @@ export const formatVariableSchedule = (event) => {
 export const formatFixedSchedule = (event) => {
     return {
         id: generateEventIdWithParentId(event),
-        groupId: event.parentId,
+        groupId: `f${event.parentId}`,
         title: event.title,
-        start: event.start,
-        end: event.end,
-        color: event.color,
+        start: event.startDateTime,
+        end: event.endDateTime,
+        // color: event.color,
+        color: "#cad9fa",
         extendedProps: {
             type: event.type,
             commonDescription: event.commonDescription,
