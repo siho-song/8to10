@@ -12,6 +12,7 @@ const TodoItem = ({currentDate, event}) => {
     today.setHours(0, 0, 0, 0);
 
     const [achievedAmount, setAchievedAmount] = useState(extendedProps.achievedAmount || 0);
+    const [isSubmmitted, setIsSubmitted] = useState(extendedProps.isComplete);
     const [showTooltip, setShowTooltip] = useState(false);
     const [errorTooltip, setErrorTooltip] = useState(false);
     const isCurrentDate = currentDate.getTime() === today.getTime();
@@ -67,31 +68,31 @@ const TodoItem = ({currentDate, event}) => {
                     )}
                     <p className="todo-time">{formatLocalDateTimeToTime(event.start)} ~ {formatLocalDateTimeToTime(event.end)}</p>
                 </div>
-                {extendedProps.dailyAmount > 0 ? (
-                    <input
-                        type="number"
-                        className="achievement-input"
-                        value={achievedAmount}
-                        onChange={handleInputChange}
-                        onFocus={handleInputFocus}
-                        onClick={handleDisabledClick}
-                        placeholder="달성량 입력"
-                        min={"0"}
-                        disabled={!isCurrentDate}
-                        max={extendedProps.dailyAmount}
-                    />
-                ) : (
-                    <button
-                        className="check-button"
-                        onClick={isCurrentDate ? handleCheck : handleDisabledClick}
-                        disabled={!isCurrentDate}
-                        aria-label="Mark as completed"
-                    >
-                        {extendedProps.isComplete ? "✓" : "☐"}
-                    </button>
-                )}
-
-
+                <div>
+                    {extendedProps.dailyAmount > 0 ? (
+                        <input
+                            type="number"
+                            className="achievement-input"
+                            value={achievedAmount}
+                            onChange={handleInputChange}
+                            onFocus={handleInputFocus}
+                            onClick={handleDisabledClick}
+                            placeholder="달성량 입력"
+                            min={"0"}
+                            disabled={!isCurrentDate}
+                            max={extendedProps.dailyAmount}
+                        />
+                    ) : (
+                        <button
+                            className="check-button"
+                            onClick={isCurrentDate ? handleCheck : handleDisabledClick}
+                            disabled={!isCurrentDate}
+                            aria-label="Mark as completed"
+                        >
+                            {extendedProps.isComplete ? "✓" : "☐"}
+                        </button>
+                    )}
+                </div>
             </div>
             {showTooltip && (
                 <div className="tooltip">
@@ -113,7 +114,7 @@ TodoItem.propTypes = {
     currentDate: PropTypes.instanceOf(Date).isRequired,
     event: PropTypes.shape({
         id: PropTypes.string.isRequired,
-        groupId: PropTypes.number,
+        groupId: PropTypes.string,
         title: PropTypes.string.isRequired,
         start: PropTypes.string.isRequired,
         end: PropTypes.string.isRequired,

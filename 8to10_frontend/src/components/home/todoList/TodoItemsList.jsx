@@ -24,7 +24,7 @@ TodoItemsList.propTypes = {
     filteredEvents: PropTypes.arrayOf(
         PropTypes.shape({
             id: PropTypes.string.isRequired,
-            groupId: PropTypes.number,
+            groupId: PropTypes.string,
             title: PropTypes.string.isRequired,
             start: PropTypes.string.isRequired,
             end: PropTypes.string.isRequired,
