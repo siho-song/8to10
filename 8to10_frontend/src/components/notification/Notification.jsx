@@ -5,7 +5,7 @@ import {buildBearerToken} from "@/helpers/TokenManager.js";
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import "@/styles/notification/Notification.css";
 import NotificationPopup from "@/components/notification/NotificationPopup.jsx";
-import {formatDateTime} from "@/helpers/TimeFormatter.js";
+import {formatDateTimeSimple} from "@/helpers/TimeFormatter.js";
 import authenticatedApi from "@/api/AuthenticatedApi.js";
 import {API_ENDPOINT_NAMES} from "@/constants/ApiEndPoints.js";
 import {useLocation} from "react-router-dom";
@@ -58,7 +58,7 @@ const Notification = () => {
 
             const newNotification = {
                 ...newNotificationData,
-                receivedAt: formatDateTime(new Date()),
+                receivedAt: formatDateTimeSimple(new Date()),
                 isRead: false,
             };
 
@@ -66,17 +66,19 @@ const Notification = () => {
                 localStorage.setItem("Last-Event-ID", event.lastEventId);
             }
 
-            const currentNotifications = [...notifications];
-            const isDuplicate = currentNotifications.some(
-                (notification) => notification.entityId === newNotification.entityId
-            );
+            setNotifications((prevNotifications) => {
+                const isDuplicate = prevNotifications.some(
+                    (notification) => notification.entityId === newNotification.entityId
+                );
 
-            const updatedNotifications = isDuplicate
-                ? currentNotifications
-                : [...currentNotifications, newNotification];
-            localStorage.setItem("notifications", JSON.stringify(updatedNotifications));
+                if (isDuplicate) return prevNotifications;
 
-            setNotifications(updatedNotifications);
+                const updatedNotifications = [...prevNotifications, newNotification];
+                localStorage.setItem("notifications", JSON.stringify(updatedNotifications));
+
+                return updatedNotifications;
+            });
+
             setUnreadCount((prevCount) => prevCount + 1);
         });
 
@@ -168,11 +170,12 @@ const Notification = () => {
     return (
         <div className="image-container" data-alt="알림">
             <button
-                className={`notification-button ${unreadCount > 0 ? "has-unread" : ""}`}
+                className={`image-link notification-button ${unreadCount > 0 ? "has-unread" : ""}`}
                 onClick={handleNotificationClick}
             >
                 <NotificationsIcon/>
                 {unreadCount > 0 && <span className="notification-badge">{unreadCount}</span>}
+                {/*<p className="header-icon-text">알림</p>*/}
             </button>
             {isPopupVisible && (
                 <NotificationPopup
