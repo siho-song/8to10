@@ -8,15 +8,14 @@ function PostsPerPage({ postsPerPage, setPostsPerPage}) {
 
     return (
         <div className="board-control-left">
-            페이지 당 글 개수:
             <select
                 id="posts-per-page"
                 value={postsPerPage}
                 onChange={handlePostsPerPageChange}
             >
-                <option value="10">10</option>
-                <option value="30">30</option>
-                <option value="50">50</option>
+                <option value="10">10개씩</option>
+                <option value="30">30개씩</option>
+                <option value="50">50개씩</option>
             </select>
         </div>
     );

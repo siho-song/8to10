@@ -6,7 +6,7 @@ import authenticatedApi from "@/api/AuthenticatedApi.js";
 import {API_ENDPOINT_NAMES} from "@/constants/ApiEndPoints.js";
 import {useLocation} from "react-router-dom";
 
-function ReplyItem({ email, reply, likedReplyIds, onReplyDelete }) {
+function ReplyItem({ email, reply, likedReplyIds, onReplyDelete, focusedCommentId }) {
 
     const location = useLocation();
     const replyRef = useRef(null);
@@ -102,13 +102,17 @@ function ReplyItem({ email, reply, likedReplyIds, onReplyDelete }) {
     }, [currentReply]);
 
     useEffect(() => {
-        const focusId = location.state?.relatedEntityId;
-        if (focusId === currentReply.id) {
+        // const focusId = location.state?.relatedEntityId;
+        let timeoutId = -1;
+        if (focusedCommentId === currentReply.id) {
             replyRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
             replyRef.current.classList.add("focused");
-            setTimeout(() => replyRef.current.classList.remove("focused"), 5000);
+            const timeout = setTimeout(() => replyRef.current.classList.remove("focused"), 5000);
+            timeoutId = timeout;
         }
-    }, []);
+
+        return () => clearTimeout(timeoutId);
+    }, [focusedCommentId]);
 
     return (
         <div className="reply">
@@ -188,6 +192,7 @@ ReplyItem.propTypes = {
     }).isRequired,
     likedReplyIds: PropTypes.arrayOf(PropTypes.number).isRequired,
     onReplyDelete: PropTypes.func.isRequired,
+    focusedCommentId: PropTypes.number,
 }
 
 export default ReplyItem;
