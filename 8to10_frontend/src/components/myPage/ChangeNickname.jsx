@@ -46,8 +46,6 @@ function ChangeNickname({ nickname, changeNickname, onBack }) {
         } catch (error) {
             setIsDuplicate(true);
             validNickname="";
-            // console.log(error.toString());
-            // console.log(error);
         }
     };
 

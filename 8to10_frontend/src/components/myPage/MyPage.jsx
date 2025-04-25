@@ -15,6 +15,7 @@ import MyScrappedBoards from "@/components/myPage/MyScrappedBoards.jsx";
 
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "@/context/auth/UseAuth.jsx";
+import DeleteAccount from "@/components/myPage/DeleteAccount.jsx";
 
 function MyPage({closeModal}) {
 
@@ -139,6 +140,15 @@ function MyPage({closeModal}) {
                             >스크랩한 게시글 보기</li>
                         </ul>
                     </div>
+                    <div className="mypage-section">
+                        <h2>기타</h2>
+                        <ul>
+                            <li
+                                className="clickable-item"
+                                onClick={() => setCurrentView("deleteAccount")}
+                            >회원 탈퇴</li>
+                        </ul>
+                    </div>
                 </div>
                 )}
 
@@ -183,6 +193,12 @@ function MyPage({closeModal}) {
                 {currentView === "myScrappedPosts" && (
                     <MyScrappedBoards
                         onBack={() => setCurrentView("mypage")}
+                        closeModal={closeModal}
+                    />
+                )}
+                {currentView === "deleteAccount" && (
+                    <DeleteAccount
+                        onBack={()=> setCurrentView('mypage')}
                         closeModal={closeModal}
                     />
                 )}
