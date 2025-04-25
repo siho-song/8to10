@@ -6,6 +6,7 @@ import {
     URL_ENCODED_ENDPOINTS
 } from "@/constants/ApiEndPoints.js";
 import {buildBearerToken} from "@/helpers/TokenManager.js";
+import authenticatedApi from "@/api/AuthenticatedApi.js";
 
 export const setAuthorizationHeaders = (config) => {
     const accessToken = localStorage.getItem('Authorization');
@@ -69,3 +70,8 @@ export const callLogoutHandler = () => {
         externalLogoutHandler();
     }
 };
+
+export const isSuccess = async (response) => {
+    const axiosResponse = await response;
+    return 200 <= axiosResponse.status && axiosResponse.status < 300;
+}
