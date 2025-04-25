@@ -1,6 +1,6 @@
 .todo-container {
     position: relative;
-    background-color: #dffcdf; /* 밝고 깔끔한 배경색 */
+    background-color: #ffffff; /* 밝고 깔끔한 배경색 */
     padding: 20px;
     border: 1px solid #e0e0e0;
     border-radius: 12px; /* 둥근 모서리 */
@@ -64,7 +64,8 @@
 }
 
 .todo-item.completed {
-    background-color: #4CAF50;
+    /*background-color: #4CAF50;*/
+    background-color: #b1d0a9;
     color: white;
 }
 
@@ -148,6 +149,7 @@
 }
 
 .submit-todo-btn {
+    margin-top: 20px;
     display: block;
     width: 100%;
     padding: 12px;
