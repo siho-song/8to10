@@ -6,7 +6,7 @@ const NotificationPopup = ({ notifications, onClose, setRead, onRemove, setUnrea
     return (
         <div className="notification-popup">
             <div className="notification-popup-header">
-                <h2>알림</h2>
+                <h2 className="notification-popup-header-text">알림</h2>
                 <button className="notification-close-button" onClick={onClose}>
                     <CloseIcon />
                 </button>

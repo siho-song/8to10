@@ -27,18 +27,19 @@ function BoardHeader({ boardState, setBoardField, handleSearch }) {
 
     return (
         <div className="board-header">
-            <h2 id="board-title">자유게시판</h2>
-            <button
-                id="write-post"
-                onClick={() => navigate("/community/board/add")}
-            >
-                글쓰기
-            </button>
-
+            <div className="board-header-top">
+                <h1 id="board-title">커뮤니티</h1>
+                <button
+                    id="board-header-top"
+                    onClick={() => navigate("/community/post/add")}
+                >
+                    글쓰기
+                </button>
+            </div>
             <div className="board-controls">
-                <PostsPerPage
-                    postsPerPage={postsPerPage}
-                    setPostsPerPage={(value) => setBoardField('postsPerPage', parseInt(value))}
+                <SortCondition
+                    sortCondition={sortCondition}
+                    setSortCondition={(value) => setBoardField('sortCondition', value)}
                 />
 
                 <div className="search-window">
@@ -53,9 +54,9 @@ function BoardHeader({ boardState, setBoardField, handleSearch }) {
                     />
                 </div>
 
-                <SortCondition
-                    sortCondition={sortCondition}
-                    setSortCondition={(value) => setBoardField('sortCondition', value)}
+                <PostsPerPage
+                    postsPerPage={postsPerPage}
+                    setPostsPerPage={(value) => setBoardField('postsPerPage', parseInt(value))}
                 />
             </div>
         </div>

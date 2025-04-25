@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import CommentItem from "@/components/community/post/reply/CommentItem.jsx";
 
-function CommentSection({ postId, email, replies, likedReplyIds, onReplySubmit, onCommentDelete, onReplyDelete }) {
+function CommentSection({ postId, email, replies, likedReplyIds, onReplySubmit, onCommentDelete, onReplyDelete, focusedCommentId }) {
 
     return (
         <div id="comment-container">
@@ -17,6 +17,7 @@ function CommentSection({ postId, email, replies, likedReplyIds, onReplySubmit, 
                             onReplySubmit={onReplySubmit}
                             onCommentDelete={onCommentDelete}
                             onReplyDelete={onReplyDelete}
+                            focusedCommentId={focusedCommentId}
                         />
                     ))}
         </div>
@@ -43,6 +44,7 @@ CommentSection.propTypes = {
     onReplySubmit: PropTypes.func.isRequired,
     onCommentDelete: PropTypes.func.isRequired,
     onReplyDelete: PropTypes.func.isRequired,
+    focusedCommentId: PropTypes.number,
 }
 
 export default CommentSection;
