@@ -11,14 +11,14 @@
     width: 100%;
     padding: 8px;
     margin-bottom: 10px;
-    background-color: #4CAF50;
+    background-color: #679267;
     color: white;
     border: none;
     border-radius: 4px;
 }
 
 #right-sidebar button:hover {
-    background-color: #45a049;
+    background-color: #8fbc8f;
 }
 
 #right-sidebar button:disabled {
@@ -73,10 +73,14 @@ select {
     display: block;
     width: 100%;
     padding: 10px;
-    background-color: #4CAF50;
+    background-color: #679267 !important;
     color: white;
     border: none;
     border-radius: 4px;
+}
+
+#toggle-add-schedule-btn:hover {
+    background-color: #8fbc8f !important;
 }
 
 /* 일정 상세보기 */
@@ -84,26 +88,27 @@ select {
     background-color: #f4f4f4;
     display: flex;
     flex-direction: column;
-    border: 8px solid #3788d8;
+    border: 8px solid #cad9fa;
     border-radius: 4px;
     margin-top: 10px;
     box-sizing: border-box;
     box-shadow: 0 4px 8px 2px rgba(0, 0, 0, 0.25);
-    /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);*/
 }
 .event-details-header-fixed {
     display: flex;
     flex-direction: row;
-    color: #ffffff;
+    color: #76762c;
     justify-content: space-between;
-    background-color: #3788d8;
+    background-color: #cad9fa;
+    /*background-color: #3788d8;*/
 }
 
 #event-details-container-variable {
     background-color: #f4f4f4;
     display: flex;
     flex-direction: column;
-    border: 8px solid #e15b27;
+    /*border: 8px solid #e15b27;*/
+    border: 8px solid #f5d0cc;
     border-radius: 4px;
     margin-top: 10px;
     box-sizing: border-box;
@@ -114,27 +119,32 @@ select {
 .event-details-header-variable {
     display: flex;
     flex-direction: row;
-    color: #ffffff;
+    /*color: #ffffff;*/
+    color: rgb(44,46,58, 0.7);
     justify-content: space-between;
-    background-color: #e15b27   ;
+    /*background-color: #e15b27   ;*/
+    background-color: #f5d0cc   ;
 }
 .edit-variable {
-    background-color: #e15b27 !important;
+    /*background-color: #e15b27 !important;*/
+    background-color: #f5d0cc !important;
 }
 .edit-variable:hover {
-    background-color: #a22300 !important;
+    /*background-color: #a22300 !important;*/
+    background-color: rgb(171,52,19, 0.7) !important;
 }
 
 .delete-variable {
-    background-color: #fb0007 !important;
+    /*background-color: #fb0007 !important;*/
+    background-color: rgba(244, 81, 30, 0.5) !important;
 }
 .delete-variable:hover {
-    background-color: #a22300 !important;
+    background-color: #FF4757 !important;
 }
 
 #event-details-container-normal {
     background-color: #f4f4f4;
-    border: 8px solid #4CAF50;
+    border: 8px solid #b1d0a9;
     border-radius: 4px;
     margin-top: 10px;
     box-sizing: border-box;
@@ -146,7 +156,7 @@ select {
     flex-direction: row;
     color: #ffffff;
     justify-content: space-between;
-    background-color: #4CAF50;
+    background-color: #b1d0a9;
 }
 
 .event-details-header-fixed h2 {
@@ -210,18 +220,20 @@ select {
 
 .description-btn.variable {
     cursor: pointer;
-    color: #e15b27;
+    /*color: #e15b27;*/
+    color: #f5d0cc;
 }
 
 .description-btn.variable:hover {
     cursor: pointer;
+    /*color: #FF4757;*/
     color: #FF4757;
     text-decoration: underline;
 }
 
 .description-btn.normal {
     cursor: pointer;
-    color: #4CAF50;
+    color: #b1d0a9;
 }
 
 .description-btn.normal:hover {
@@ -232,19 +244,20 @@ select {
 
 .description-btn.fixed {
     cursor: pointer;
-    color: #4a90e2;
+    color: #cad9fa;
 }
 
 .description-btn.fixed:hover {
     cursor: pointer;
-    color: rgba(74, 144, 226, 0.5);
+    color: #1196ba;
     text-decoration: underline;
 }
 
 .description-delete-btn {
     margin-left: 10px;
     cursor: pointer;
-    color: #e15b27;
+    /*color: #e15b27;*/
+    color: #f5d0cc;
 }
 
 .description-delete-btn:hover {
@@ -265,7 +278,14 @@ select {
 
 .description-cancel-btn {
     margin-left:5px;
-    background-color: #e15b27 !important;
+    /*background-color: #e15b27 !important;*/
+    background-color:  rgba(244, 81, 30, 0.5) !important;
+}
+
+.description-cancel-btn:hover {
+    margin-left:5px;
+    /*background-color: #e15b27 !important;*/
+    background-color:  #FF4757 !important;
 }
 
 .description-textarea {
@@ -284,19 +304,20 @@ select {
 }
 
 .description-textarea.normal:focus {
-    border-color: #4CAF50; /* 포커스 시 테두리 색상 */
+    border-color: #b1d0a9; /* 포커스 시 테두리 색상 */
     box-shadow: 0 0 5px rgba(56, 142, 60, 0.5); /* 포커스 시 그림자 효과 */
     outline: none; /* 기본 outline 제거 */
 }
 
 .description-textarea.fixed:focus {
-    border-color: #4a90e2; /* 포커스 시 테두리 색상 */
-    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+    border-color: #cad9fa; /* 포커스 시 테두리 색상 */
+    box-shadow: 0 0 5px rgb(17,150,186);
     outline: none; /* 기본 outline 제거 */
 }
 
 .description-textarea.variable:focus {
-    border-color: #f4511e; /* 포커스 시 테두리 색상 변경 */
+    /*border-color: #f4511e; !* 포커스 시 테두리 색상 변경 *!*/
+    border-color: #f5d0cc; /* 포커스 시 테두리 색상 변경 */
     box-shadow: 0 0 5px rgba(244, 81, 30, 0.5); /* 포커스 시 그림자 효과 (색상에 맞게 조정) */
     outline: none; /* 기본 outline 제거 */
 }
@@ -308,8 +329,8 @@ select {
 
 /* input 요소에 포커스 시 색상 및 효과 적용 */
 #edit-schedule-title-fixed:focus {
-    border-color: #4a90e2;
-    box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+    border-color: #cad9fa; /* 포커스 시 테두리 색상 */
+    box-shadow: 0 0 5px rgb(17,150,186);
     outline: none; /* 기본 outline 제거 */
 }
 
@@ -320,7 +341,7 @@ select {
 
 /* input 요소에 포커스 시 색상 및 효과 적용 */
 #edit-schedule-title-normal:focus {
-    border-color: #4CAF50; /* 포커스 시 테두리 색상 */
+    border-color: #b1d0a9; /* 포커스 시 테두리 색상 */
     box-shadow: 0 0 5px rgba(56, 142, 60, 0.5); /* 포커스 시 그림자 효과 */
     outline: none; /* 기본 outline 제거 */
 }
@@ -332,8 +353,9 @@ select {
 
 /* input 요소에 포커스 시 색상 및 효과 적용 */
 #edit-schedule-title-variable:focus {
-    border-color: #f4511e; /* 포커스 시 테두리 색상 변경 */
-    box-shadow: 0 0 5px rgba(244, 81, 30, 0.5); /* 포커스 시 그림자 효과 */
+    /*border-color: #f4511e; !* 포커스 시 테두리 색상 변경 *!*/
+    border-color: #f5d0cc; /* 포커스 시 테두리 색상 변경 */
+        box-shadow: 0 0 5px rgba(244, 81, 30, 0.5); /* 포커스 시 그림자 효과 */
     outline: none; /* 기본 outline 제거 */
 }
 
@@ -345,7 +367,7 @@ select {
 
 
 .create-description.normal {
-    background-color: #4CAF50 !important;
+    background-color: #b1d0a9 !important;
 }
 
 .create-description.normal:hover {
@@ -353,15 +375,15 @@ select {
 }
 
 .create-description.fixed {
-    background-color: #4a90e2 !important;
+    background-color: #cad9fa !important;
 }
 
 .create-description.fixed:hover {
-    background-color: rgba(74, 144, 226, 0.5) !important;
+    background-color: rgb(17,150,186) !important;
 }
 
 .description-edit-btn.normal {
-    background-color: #4CAF50 !important;
+    background-color: #b1d0a9 !important;
 }
 
 .description-edit-btn.normal:hover {
@@ -369,27 +391,28 @@ select {
 }
 
 .description-edit-btn.variable {
-    background-color: #f4511e !important;
+    /*background-color: #f4511e !important;*/
+    background-color: #f5d0cc !important;
 }
 
 .description-edit-btn.variable:hover {
-    background-color: rgba(244, 81, 30, 0.5) !important;
+    background-color: #FF4757 !important;
 }
 
 .description-edit-btn.fixed {
-    background-color: #4a90e2 !important;
+    background-color: #cad9fa !important;
 }
 
 .description-edit-btn.fixed:hover {
-    background-color: rgba(74, 144, 226, 0.5) !important;
+    background-color: rgb(17,150,186)  !important;
 }
 
 
 .fixed-item-edit-btn {
-    background-color: #4a90e2 !important;
+    background-color: #cad9fa !important;
 }
 .fixed-item-edit-btn:hover {
-    background-color: rgba(74, 144, 226, 0.5) !important;
+    background-color: rgb(17,150,186) !important;
 }
 
 .common-description-edit-message {
@@ -401,11 +424,11 @@ select {
 }
 
 .edit-cancel-btn {
-    background-color: #e15b27 !important;
+    background-color: rgba(244, 81, 30, 0.5) !important;
 }
 
 .edit-cancel-btn:hover {
-    background-color: rgba(244, 81, 30, 0.5) !important;
+    background-color: #FF4757 !important;
 }
 
 .error-message {
@@ -415,12 +438,12 @@ select {
 }
 
 .fixed-edit-btn {
-    background-color: #4a90e2 !important;
+    background-color: #cad9fa !important;
 }
 
 
 .fixed-edit-btn:hover {
-    background-color: rgba(74, 144, 226, 0.5) !important;
+    background-color: rgb(17,150,186) !important;
 }
 
 .fixed-edit-btn:disabled {
@@ -428,7 +451,7 @@ select {
 }
 
 .normal-edit-btn {
-    background-color: #4CAF50 !important;
+    background-color: #b1d0a9 !important;
 }
 
 .normal-edit-btn:hover {

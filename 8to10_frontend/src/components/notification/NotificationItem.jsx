@@ -43,8 +43,8 @@ const NotificationItem = ({notification, onRemove, setRead, setUnreadCount}) => 
             onClick={handleNotificationItemClick}
         >
             <div>
-                <p><strong>{notification.message}</strong></p>
-                <p>{notification.receivedAt}</p>
+                <p className="notification-content"><strong>{notification.message}</strong></p>
+                <p className="notification-receivedAt">{notification.receivedAt}</p>
             </div>
             <button
                 className="notification-remove-button"

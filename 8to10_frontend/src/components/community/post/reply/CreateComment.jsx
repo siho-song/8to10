@@ -2,11 +2,14 @@ import {useState} from "react";
 import PropTypes from "prop-types";
 import authenticatedApi from "@/api/AuthenticatedApi.js";
 import {API_ENDPOINT_NAMES} from "@/constants/ApiEndPoints.js";
+import {useNavigate} from "react-router-dom";
 
 function CreateComment({ id, onCommentSubmit }) {
 
+    const navigate = useNavigate();
+
     const [bodyData, setBodyData] = useState({
-        boardId : id,
+        postId : id,
         parentId : null,
         contents : '',
     });
@@ -21,7 +24,7 @@ function CreateComment({ id, onCommentSubmit }) {
 
     const handleCommentSubmit = async () => {
         try {
-            const url = "/community/reply/add";
+            const url = "/community/reply/save";
             const response = await authenticatedApi.post(
                 url,
                 bodyData,
@@ -29,22 +32,22 @@ function CreateComment({ id, onCommentSubmit }) {
                     apiEndPoint: API_ENDPOINT_NAMES.CREATE_REPLY,
                 }
             );
-            const data = response.data;
-
-            const newComment = {
-                id: data.replyId,
-                contents: data.contents,
-                createdAt: data.createdAt,
-                updatedAt: data.updatedAt,
-                nickname: data.nickname,
-                writer: data.writer,
-                parentId: data.parentId,
-                totalLike: 0,
-            }
-
-            onCommentSubmit(newComment);
-            setBodyData({...bodyData, contents: ''});
-
+            // const data = response.data;
+            // console.log("data : " + data);
+            // const newComment = {
+            //     id: data.replyId,
+            //     contents: data.contents,
+            //     createdAt: data.createdAt,
+            //     updatedAt: data.updatedAt,
+            //     nickname: data.nickname,
+            //     writer: data.writer,
+            //     parentId: data.parentId,
+            //     totalLike: 0,
+            // }
+            //
+            // onCommentSubmit(newComment);
+            // setBodyData({...bodyData, contents: ''});
+            navigate(0);
         }
         catch (error) {
             console.error("Error : \n", error.toString());

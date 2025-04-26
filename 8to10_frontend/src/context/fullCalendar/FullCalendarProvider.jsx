@@ -3,38 +3,46 @@ import {formatFixedSchedule, formatNormalSchedule, formatVariableSchedule} from 
 import authenticatedApi from "@/api/AuthenticatedApi.js";
 import {API_ENDPOINT_NAMES} from "@/constants/ApiEndPoints.js";
 import {CalendarContext} from "@/context/fullCalendar/FullCalendarContext.jsx";
+import {isSuccess} from "@/helpers/AxiosHelper.js";
+import {LOAD_SCHEDULES} from "@/constants/ErrorMessage.js";
 
 export const FullCalendarProvider = ({children}) => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+
     const [events, setEvents] = useState([]);
+    const [ym, setYm] = useState({year: year, month: month});
+
+    // 연, 월로 조회하도록 수정 필요
+    const loadCalendarEvents = async () => {
+        const url = `/schedule/${ym.year}/${ym.month}`;
+        const response = await authenticatedApi.get(
+            url,
+            {
+                apiEndPoint: API_ENDPOINT_NAMES.GET_EVENTS,
+            });
+        if (await isSuccess(response)) {
+            const data = response.data;
+
+            const formattedEvents = data.items.map((event) => {
+                if (event.type === "normal") {
+                    return formatNormalSchedule(event);
+                } else if (event.type === "variable") {
+                    return formatVariableSchedule(event);
+                } else if (event.type === "fixed") {
+                    return formatFixedSchedule(event);
+                }
+            });
+
+            setEvents(formattedEvents);
+        } else {
+            alert(LOAD_SCHEDULES.FAIL);
+        }
+    }
+
 
     useEffect(() => {
-
-        const loadCalendarEvents = async () => {
-            try {
-                const url = '/schedule';
-                const response = await authenticatedApi.get(
-                    url,
-                    {
-                        apiEndPoint: API_ENDPOINT_NAMES.GET_EVENTS,
-                    });
-                const data = response.data;
-
-                const formattedEvents = data.items.map((event) => {
-                    if (event.type === "normal") {
-                        return formatNormalSchedule(event);
-                    } else if (event.type === "variable") {
-                        return formatVariableSchedule(event);
-                    } else if (event.type === "fixed") {
-                        return formatFixedSchedule(event);
-                    }
-                });
-
-                setEvents(formattedEvents);
-            } catch (error) {
-                console.error("Error : \n", error.toString());
-                console.error(error);
-            }
-        }
         loadCalendarEvents();
     }, []);
 
@@ -58,7 +66,6 @@ export const FullCalendarProvider = ({children}) => {
         setEvents((prevEvents) =>
             prevEvents.filter((event) => {
                 if (event.groupId !== groupId) return true;
-                console.log("event.start : ", event.start);
                 const eventDate = new Date(event.start);
                 return eventDate < date;
             })
@@ -162,6 +169,7 @@ export const FullCalendarProvider = ({children}) => {
     return (
         <CalendarContext.Provider value={
             {events,
+                loadCalendarEvents,
                 addEvent,
                 updateExtendedProps,
                 updateProps,

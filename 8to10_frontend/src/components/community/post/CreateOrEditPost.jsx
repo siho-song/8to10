@@ -34,7 +34,8 @@ function CreateOrEditPost({ isEditMode }) {
         }
 
         try {
-            const url = isEditMode ? `/community/board` : `/community/board/add`;
+
+            const url = isEditMode ? `/community/post` : `/community/post/save`;
             const response = isEditMode ? await authenticatedApi.put(
                 url,
                 updatePostData,
@@ -46,17 +47,17 @@ function CreateOrEditPost({ isEditMode }) {
                 {
                     apiEndPoint: API_ENDPOINT_NAMES.CREATE_POST,
                 });
-            const data = response.data;
 
             if (isEditMode) {
-                navigate(`/community/board/${data.id}`);
+                navigate(`/community/post/${id.postId}`);
             } else {
-                const newPost = {
-                    ...data,
-                    hasLike: false,
-                    hasScrap: false,
-                }
-                navigate(`/community/board/${data.id}`, { state: {post:newPost} });
+                // const newPost = {
+                //     ...data,
+                //     hasLike: false,
+                //     hasScrap: false,
+                // }
+                // navigate(`/community/post/${data.id}`, { state: {post:newPost} });
+                navigate(`/community/board`);
             }
         } catch (error) {
             console.error("Error : \n", error.toString());
@@ -75,40 +76,44 @@ function CreateOrEditPost({ isEditMode }) {
 
     return (
         <div className="create-post-container">
-            <div className="create-post-header">
-                <h2>{isEditMode ? "게시글 수정" : "게시글 작성"}</h2>
-                <button
-                    className="view-list-btn"
-                    onClick={() => navigate("/community/board")}>
-                    목록보기
-                </button>
+            <div className="create-post-content">
+                <div className="board-header">
+                    <div className="board-header-top">
+                        <h1>{isEditMode ? "게시글 수정" : "게시글 작성"}</h1>
+                        <button
+                            className="view-list-btn"
+                            onClick={() => navigate("/community/board")}>
+                            목록보기
+                        </button>
+                    </div>
+                </div>
+                <form className="post-form" onSubmit={handleSubmit}>
+                    <div className="post-form-group">
+                        <label htmlFor="post-title">글 제목</label>
+                        <input
+                            type="text"
+                            placeholder="글 제목을 입력하세요"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                        />
+                        <span className="error-message" id="title-error"></span>
+                    </div>
+
+                    <div className="post-form-group">
+                        <label htmlFor="post-content">글 내용</label>
+                        <textarea
+                            rows="10"
+                            placeholder="내용을 입력하세요"
+                            value={contents}
+                            onChange={(e) => setContents(e.target.value)}
+                        />
+                        <span className="post-error-message" id="content-error"></span>
+                    </div>
+
+                    <button className="post-submit-btn" type="submit">등록</button>
+                </form>
             </div>
-            <hr/>
-            <form className="post-form" onSubmit={handleSubmit}>
-                <div className="post-form-group">
-                    <label htmlFor="post-title">글 제목</label>
-                    <input
-                        type="text"
-                        placeholder="글 제목을 입력하세요"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                    />
-                    <span className="error-message" id="title-error"></span>
-                </div>
 
-                <div className="post-form-group">
-                    <label htmlFor="post-content">글 내용</label>
-                    <textarea
-                        rows="10"
-                        placeholder="내용을 입력하세요"
-                        value={contents}
-                        onChange={(e) => setContents(e.target.value)}
-                    />
-                    <span className="post-error-message" id="content-error"></span>
-                </div>
-
-                <button className="post-submit-btn" type="submit">등록</button>
-            </form>
         </div>
     );
 }

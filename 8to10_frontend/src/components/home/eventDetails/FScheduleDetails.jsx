@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import {formatDateToLocalDateTime} from "@/helpers/TimeFormatter.js";
+import {dateToLocalDateTime, formatDateToLocalDateTime} from "@/helpers/TimeFormatter.js";
 import {useCalendar} from "@/context/fullCalendar/UseCalendar.jsx";
 import {useEffect, useState} from "react";
 import authenticatedApi from "@/api/AuthenticatedApi.js";
@@ -13,6 +13,7 @@ import {
     validateTitle
 } from "@/components/home/eventDetails/ValidateEventDetails.js";
 import {EVENT_DETAILS_VALIDATE_MESSAGE} from "@/constants/ScheduleValidateMessage.js";
+import {isSuccess} from "@/helpers/AxiosHelper.js";
 
 const FScheduleDetails = ({selectedEvent, onClose}) => {
     const {deleteEvent, deleteEventsByGroupId, deleteEventsAfterDateByGroupId, updateExtendedProps, updateProps, updatePropsByGroupId, updateExtendedPropsByGroupId, countEventsByGroupId, getEarliestStartByGroupId} = useCalendar();
@@ -172,8 +173,8 @@ const FScheduleDetails = ({selectedEvent, onClose}) => {
         const urlOfTotalData = "/schedule/fixed";
         const itemData = {
             id: selectedEvent.extendedProps.originId,
-            startDate: startDateTime,
-            endDate: endDateTime,
+            startDateTime: startDateTime,
+            endDateTime: endDateTime,
             detailDescription: detailDescription,
         };
         const totalData = {
@@ -181,28 +182,59 @@ const FScheduleDetails = ({selectedEvent, onClose}) => {
             title: title,
             commonDescription: commonDescription,
         }
-        try {
-            await authenticatedApi.patch(
-                urlOfItemData,
-                itemData,
-                {apiEndPoint: API_ENDPOINT_NAMES.EDIT_F_SCHEDULE_ITEM,}
-            );
-            updateExtendedProps(selectedEvent.id, ['detailDescription'], [detailDescription])
+        const itemResponse = await authenticatedApi.patch(
+            urlOfItemData,
+            itemData,
+            {apiEndPoint: API_ENDPOINT_NAMES.EDIT_F_SCHEDULE_ITEM,}
+        );
+
+        const totalResponse = await authenticatedApi.put(
+            urlOfTotalData,
+            totalData,
+            {apiEndPoint: API_ENDPOINT_NAMES.EDIT_F_SCHEDULE},
+        );
+
+        const itemSuccess = isSuccess(itemResponse);
+        const totalSuccess = isSuccess(totalResponse);
+
+        if (itemSuccess && totalSuccess) {
+            updateExtendedProps(selectedEvent.id, ['detailDescription'], [detailDescription]);
             updateProps(selectedEvent.id, ['start', 'end'], [startDateTime, endDateTime]);
             setHasDetailDescription(detailDescription.length > 0);
 
-            await authenticatedApi.put(
-                urlOfTotalData,
-                totalData,
-                {apiEndPoint: API_ENDPOINT_NAMES.EDIT_F_SCHEDULE},
-            )
-            updateExtendedPropsByGroupId(parseInt(selectedEvent.groupId), ['commonDescription'], [commonDescription])
+            updateExtendedPropsByGroupId(selectedEvent.groupId, ['commonDescription'], [commonDescription])
             setHasCommonDescription(commonDescription.length > 0);
-            updatePropsByGroupId(parseInt(selectedEvent.groupId), ['title'], [title]);
+            updatePropsByGroupId(selectedEvent.groupId, ['title'], [title]);
 
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.MODIFICATION_SUCCESS);
             setIsItemEditMode(false);
-        } catch(e) {
+        } else {
+            if (!itemSuccess) {
+                await authenticatedApi.put(
+                    urlOfTotalData,
+                    {
+                        id: selectedEvent.extendedProps.parentId,
+                        title: selectedEvent.title,
+                        commonDescription: selectedEvent.extendedProps.commonDescription,
+                    }
+                )
+            }
+
+            if (!totalSuccess) {
+                const start = dateToLocalDateTime(selectedEvent.start);
+                const end = dateToLocalDateTime(selectedEvent.end);
+
+                await authenticatedApi.patch(
+                    urlOfItemData,
+                    {
+                        id: selectedEvent.extendedProps.originId,
+                        startDateTime: start,
+                        endDateTime: end,
+                        detailDescription: selectedEvent.extendedProps.detailDescription,
+                    },
+                    {apiEndPoint: API_ENDPOINT_NAMES.EDIT_F_SCHEDULE_ITEM,}
+                );
+            }
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.MODIFICATION_FAIL);
         }
     }
@@ -214,17 +246,17 @@ const FScheduleDetails = ({selectedEvent, onClose}) => {
             title: selectedEvent.title,
             commonDescription: commonDescription,
         }
-        try {
-            await authenticatedApi.put(
-                url,
-                data,
-                {apiEndPoint: API_ENDPOINT_NAMES.EDIT_F_SCHEDULE},
-            );
-            updateExtendedPropsByGroupId(parseInt(selectedEvent.groupId), ['commonDescription'], [commonDescription]);
+        const response = await authenticatedApi.put(
+            url,
+            data,
+            {apiEndPoint: API_ENDPOINT_NAMES.EDIT_F_SCHEDULE},
+        );
+        if (await isSuccess(response)) {
+            updateExtendedPropsByGroupId(selectedEvent.groupId, ['commonDescription'], [commonDescription]);
             setHasCommonDescription(commonDescription.length > 0);
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.MEMO_SUCCESS);
             setIsCommonDescriptionEditMode(false);
-        } catch(e) {
+        } else {
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.MEMO_FAIL);
         }
     }
@@ -233,22 +265,21 @@ const FScheduleDetails = ({selectedEvent, onClose}) => {
         const url = "/schedule/fixed/detail";
         const data = {
             id: selectedEvent.extendedProps.originId,
-            startDate: formatDateToLocalDateTime(selectedEvent.start),
-            endDate: formatDateToLocalDateTime(selectedEvent.end),
+            startDateTime: formatDateToLocalDateTime(selectedEvent.start),
+            endDateTime: formatDateToLocalDateTime(selectedEvent.end),
             detailDescription: detailDescription,
         };
-
-        try {
-            await authenticatedApi.patch(
-                url,
-                data,
-                {apiEndPoint: API_ENDPOINT_NAMES.EDIT_F_SCHEDULE_ITEM,},
-            );
+        const response = await authenticatedApi.patch(
+            url,
+            data,
+            {apiEndPoint: API_ENDPOINT_NAMES.EDIT_F_SCHEDULE_ITEM,},
+        );
+        if (await isSuccess(response)) {
             updateExtendedProps(selectedEvent.id, ['detailDescription'], [detailDescription]);
             setHasDetailDescription(detailDescription.length > 0);
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.MEMO_SUCCESS);
             setIsDetailDescriptionEditMode(false);
-        } catch(e) {
+        } else {
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.MEMO_FAIL);
         }
     }
@@ -258,63 +289,63 @@ const FScheduleDetails = ({selectedEvent, onClose}) => {
     }
 
     const handleTotalDelete = async() => {
-        try {
-            const url = `/schedule/${selectedEvent.extendedProps.parentId}`;
-            await authenticatedApi.delete(
-                url,
-                {apiEndPoint: API_ENDPOINT_NAMES.DELETE_SCHEDULE}
-            );
+        const url = `/schedule/fixed/${selectedEvent.extendedProps.parentId}`;
+        const response = await authenticatedApi.delete(
+            url,
+            {apiEndPoint: API_ENDPOINT_NAMES.DELETE_SCHEDULE}
+        );
+        if (await isSuccess(response)) {
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.DELETE_SUCCESS);
-            deleteEventsByGroupId(parseInt(selectedEvent.groupId));
+            deleteEventsByGroupId(selectedEvent.groupId);
             closeModal();
             onClose();
-        } catch (e) {
+        } else {
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.DELETE_FAIL);
         }
     }
 
     const handleTotalDeleteFromNow = async () => {
-        const earliestStart = getEarliestStartByGroupId(parseInt(selectedEvent.groupId));
+        const earliestStart = getEarliestStartByGroupId(selectedEvent.groupId);
 
         if (formatDateToLocalDateTime(selectedEvent.start) === earliestStart) {
             await handleTotalDelete();
             return;
         }
 
-        try {
-            const url = `/schedule/fixed/detail?parentId=${selectedEvent.extendedProps.parentId}&startDate=${formatDateToLocalDateTime(selectedEvent.start)}`;
-            const response = await authenticatedApi.delete(
-                url,
-                {apiEndPoint: API_ENDPOINT_NAMES.DELETE_F_SCHEDULE_FROM_NOW},
-            );
+        const url = `/schedule/fixed/detail?parentId=${selectedEvent.extendedProps.parentId}&startDate=${formatDateToLocalDateTime(selectedEvent.start)}`;
+        const response = await authenticatedApi.delete(
+            url,
+            {apiEndPoint: API_ENDPOINT_NAMES.DELETE_F_SCHEDULE_FROM_NOW},
+        );
+        if (await isSuccess(response)) {
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.DELETE_SUCCESS);
-            deleteEventsAfterDateByGroupId(parseInt(selectedEvent.groupId), selectedEvent.start);
+            deleteEventsAfterDateByGroupId(selectedEvent.groupId, selectedEvent.start);
             closeModal();
             onClose();
-        } catch (e) {
+        } else {
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.DELETE_FAIL);
         }
-
     }
 
     const handleItemDelete = async () => {
-        const currentEventCounts = countEventsByGroupId(parseInt(selectedEvent.groupId));
+        const currentEventCounts = countEventsByGroupId(selectedEvent.groupId);
 
         if (currentEventCounts === 1) {
             await handleTotalDelete();
             return;
         }
-        try {
-            const url = `/schedule/fixed/detail/${selectedEvent.extendedProps.originId}`;
-            const response = await authenticatedApi.delete(
-                url,
-                {apiEndPoint: API_ENDPOINT_NAMES.DELETE_F_SCHEDULE_ITEM},
-            );
+
+        const url = `/schedule/fixed/detail/${selectedEvent.extendedProps.originId}`;
+        const response = await authenticatedApi.delete(
+            url,
+            {apiEndPoint: API_ENDPOINT_NAMES.DELETE_F_SCHEDULE_ITEM},
+        );
+        if (await isSuccess(response)) {
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.DELETE_SUCCESS);
             deleteEvent(selectedEvent.id);
             closeModal();
             onClose();
-        } catch (e) {
+        } else {
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.DELETE_FAIL);
         }
     }

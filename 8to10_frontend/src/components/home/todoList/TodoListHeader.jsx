@@ -21,7 +21,7 @@ const TodoListHeader = ({currentDate, changeCurrentDate}) => {
                 id="prev-date-btn"
                 onClick={handlePrevDateClick}
             >
-                이전
+                &lt;
             </button>
 
             <span id="current-date">{formatDate(currentDate)}</span>
@@ -30,7 +30,7 @@ const TodoListHeader = ({currentDate, changeCurrentDate}) => {
                 id="next-date-btn"
                 onClick={handleNextDateClick}
             >
-                다음
+                &gt;
             </button>
         </div>
     );

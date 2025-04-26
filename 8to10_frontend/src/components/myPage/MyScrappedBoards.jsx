@@ -12,7 +12,7 @@ const MyScrappedBoards = ({onBack, closeModal}) => {
     useEffect(() => {
         const loadScrappedBoards = async () => {
             try {
-                const url = "/mypage/scrapped-boards";
+                const url = "/mypage/scrapped-posts";
                 const response = await authenticatedApi.get(
                     url,
                     {apiEndPoint: API_ENDPOINT_NAMES.GET_MY_SCRAPPED_BOARDS,},
@@ -50,7 +50,7 @@ const MyScrappedBoards = ({onBack, closeModal}) => {
                             <button
                                 key={post.boardId}
                                 className="scrapped-post-link"
-                                onClick={() => handlePostClick(`/community/board/${post.boardId}`)}
+                                onClick={() => handlePostClick(`/community/post/${post.boardId}`)}
                             >
                                 <h3 className="scrapped-post-title">{post.title}</h3>
                                 <div className="scrapped-post-meta">

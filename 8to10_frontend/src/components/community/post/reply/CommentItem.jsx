@@ -7,17 +7,17 @@ import ReplyItem from "@/components/community/post/reply/ReplyItem.jsx";
 import {formatDateTime} from "@/helpers/TimeFormatter.js";
 import authenticatedApi from "@/api/AuthenticatedApi.js";
 import {API_ENDPOINT_NAMES} from "@/constants/ApiEndPoints.js";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
-function CommentItem({ postId, email, reply, replies, likedReplyIds, onReplySubmit, onCommentDelete, onReplyDelete }) {
+function CommentItem({ postId, email, reply, replies, likedReplyIds, onReplySubmit, onCommentDelete, onReplyDelete, focusedCommentId }) {
 
     const commentRef = useRef(null);
     const location = useLocation();
-
+    const navigate = useNavigate();
     const [comment, setComment] = useState(reply);
 
     const [replyForm, setReplyForm] = useState({
-        boardId: postId,
+        postId: postId,
         parentId: reply.id,
         contents: "",
     });
@@ -53,7 +53,7 @@ function CommentItem({ postId, email, reply, replies, likedReplyIds, onReplySubm
 
     const handleReplySubmit = async() => {
         try {
-            const url = "/community/reply/add";
+            const url = "/community/reply/save";
             const response = await authenticatedApi.post(
                 url,
                 replyForm,
@@ -61,22 +61,23 @@ function CommentItem({ postId, email, reply, replies, likedReplyIds, onReplySubm
                     apiEndPoint: API_ENDPOINT_NAMES.CREATE_REPLY
                 }
             );
-            const data = response.data;
-
-            const newComment = {
-                id: data.replyId,
-                contents: data.contents,
-                createdAt: data.createdAt,
-                updatedAt: data.updatedAt,
-                nickname: data.nickname,
-                writer: data.writer,
-                parentId: data.parentId,
-                totalLike: 0,
-            }
-
-            onReplySubmit(newComment);
-            resetReplyInput();
-            setShowReplyInput(false);
+            // const data = response.data;
+            //
+            // const newComment = {
+            //     id: data.replyId,
+            //     contents: data.contents,
+            //     createdAt: data.createdAt,
+            //     updatedAt: data.updatedAt,
+            //     nickname: data.nickname,
+            //     writer: data.writer,
+            //     parentId: data.parentId,
+            //     totalLike: 0,
+            // }
+            //
+            // onReplySubmit(newComment);
+            // resetReplyInput();
+            // setShowReplyInput(false);
+            navigate(0);
         } catch (error) {
             console.error("Error : \n", error.toString());
             console.error(error);
@@ -158,13 +159,20 @@ function CommentItem({ postId, email, reply, replies, likedReplyIds, onReplySubm
     }, [showReplyInput, comment]);
 
     useEffect(() => {
-        const focusId = location.state?.relatedEntityId;
-        if (focusId === comment.id) {
+        // const focusId = location.state?.relatedEntityId;
+        // if (focusId === comment.id) {
+        let timeoutId = -1;
+        if (focusedCommentId === comment.id) {
             commentRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
             commentRef.current.classList.add("focused");
-            setTimeout(() => commentRef.current.classList.remove("focused"), 5000);
+            const timeout = setTimeout(() => commentRef.current.classList.remove("focused"), 5000);
+            timeoutId = timeout
+            // navigate(location.pathname, { replace: true, state: null });
         }
-    }, [location])
+
+        return () => clearTimeout(timeoutId);
+    // }, [location])
+    }, [focusedCommentId])
 
     return (
         <div className="comment" id={`comment-${comment.id}`} ref={commentRef}>
@@ -265,6 +273,7 @@ function CommentItem({ postId, email, reply, replies, likedReplyIds, onReplySubm
                         reply={childReply}
                         likedReplyIds={likedReplyIds}
                         onReplyDelete={onReplyDelete}
+                        focusedCommentId={focusedCommentId}
                     />
                 ))}
             </div>
@@ -302,6 +311,7 @@ CommentItem.propTypes = {
     onReplySubmit: PropTypes.func.isRequired,
     onCommentDelete: PropTypes.func.isRequired,
     onReplyDelete: PropTypes.func.isRequired,
+    focusedCommentId: PropTypes.number,
 }
 
 export default CommentItem;

@@ -16,6 +16,8 @@ function HomeSidebarRight({ selectedEvent, onClose, showScheduleForm, onShowForm
     const [scheduleType, setScheduleType] = useState(null);
 
     const handleTogglePopup = () => {
+        // 일정 생성 팝업을 열면 기존 우측 사이드바에 열려있는 창이 닫혀야함
+        onClose();
         setShowPopup((prev) => !prev);
     };
 

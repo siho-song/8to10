@@ -11,8 +11,8 @@ const PaginationComponent = ({ boardState, setBoardField }) => {
     return (
         <Stack spacing={2} alignItems="center">
             <Pagination
-                count={boardState.totalPages}
-                page={boardState.pageNum + 1}
+                count={boardState.totalPages + 1}
+                page={boardState.pageNum}
                 variant="outlined"
                 shape="rounded"
                 size="medium"
@@ -20,14 +20,14 @@ const PaginationComponent = ({ boardState, setBoardField }) => {
                     <PaginationItem
                         {...item}
                         onClick={() => {
-                            if (item.type === 'previous' && boardState.pageNum > 0) {
+                            if (item.type === 'previous' && boardState.pageNum > 1) {
                                 setBoardField('pageNum', boardState.pageNum - 1);
                             }
-                            if (item.type === 'next' && boardState.pageNum < boardState.totalPages - 1) {
+                            if (item.type === 'next' && boardState.pageNum < boardState.totalPages) {
                                 setBoardField('pageNum', boardState.pageNum + 1);
                             }
                             if (item.type === 'page') {
-                                setBoardField('pageNum', item.page - 1);
+                                setBoardField('pageNum', item.page);
                             }
                             window.scrollTo({
                                 top: 0,

@@ -12,11 +12,13 @@ const BoardList = ({ posts }) => {
     return (
         <div className="board-list">
             {posts.map(post => (
-                <div key={post.id} className="post" onClick={() => navigate(`/community/board/${post.id}`)}>
+                <div key={post.id} className="post" onClick={() => navigate(`/community/post/${post.id}`)}>
                     <h3>{post.title}</h3>
-                    <p>{post.nickname}</p>
-                    <p>좋아요: {post.totalLike} 스크랩: {post.totalScrap}</p>
-                    <p>{new Date(post.createdAt).toLocaleDateString()}</p>
+                    <div>
+                        <p>{post.nickname}</p>
+                        <p>좋아요: {post.totalLike} 스크랩: {post.totalScrap}</p>
+                        <p>{new Date(post.createdAt).toLocaleDateString()}</p>
+                    </div>
                 </div>
             ))}
         </div>

@@ -17,10 +17,11 @@ import {
     validateTitle
 } from "@/components/home/form/ScheduleForm/ValidateScheduleForm.js";
 import {EVENT_CREATE_VALIDATE_MESSAGE} from "@/constants/ScheduleValidateMessage.js";
+import {isSuccess} from "@/helpers/AxiosHelper.js";
 
 function VariableScheduleForm({ onClose }) {
 
-    const { addEvent } = useCalendar();
+    const { loadCalendarEvents } = useCalendar();
 
     const today = new Date();
 
@@ -72,25 +73,23 @@ function VariableScheduleForm({ onClose }) {
         const finalData = {
             title: formData.title,
             commonDescription: formData.commonDescription,
-            start: startDateTime,
-            end: endDateTime
+            startDateTime: startDateTime,
+            endDateTime: endDateTime
         };
 
-        try {
-            const url = '/schedule/variable';
-            const response = await authenticatedApi.post(
-                url,
-                finalData,
-                {
-                    apiEndPoint: API_ENDPOINT_NAMES.CREATE_V_SCHEDULE,
-            });
-            const data = response.data;
-            const formattedEvent = formatVariableSchedule(data);
-            addEvent(formattedEvent);
+        const url = '/schedule/variable';
+        const response = await authenticatedApi.post(
+            url,
+            finalData,
+            {
+                apiEndPoint: API_ENDPOINT_NAMES.CREATE_V_SCHEDULE,
+        });
+
+        if (isSuccess(response)) {
+            await loadCalendarEvents();
             alert(EVENT_CREATE_VALIDATE_MESSAGE.SUBMIT_SUCCESS);
             onClose();
-
-        } catch (error) {
+        } else {
             alert(EVENT_CREATE_VALIDATE_MESSAGE.SUBMIT);
         }
     };
@@ -157,7 +156,7 @@ function VariableScheduleForm({ onClose }) {
     };
 
     return (
-        <div id="schedule-form-container" style={{padding: '20px'}}>
+        <div id="schedule-form-container">
             <h2 id="schedule-form-header">변동 일정 생성</h2>
             <form id="schedule-form" data-type="variable" onSubmit={handleSubmit}>
                 <div className="form-group">

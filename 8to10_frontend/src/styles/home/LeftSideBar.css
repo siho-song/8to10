@@ -1,6 +1,6 @@
 
 .achievement-box {
-    background-color: #dffcdf;
+    background-color: #ffffff;
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 8px;
@@ -9,7 +9,7 @@
 }
 
 .todo-container {
-    background-color: #f5faf5;
+    background-color: #ffffff;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -19,7 +19,7 @@
 /* 좌측 사이드 바 */
 /* 좌측 사이드바 사용자 달성률 박스 스타일 */
 .achievement-box {
-    background-color: #dffcdf;
+    background-color: #ffffff;
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 8px;
@@ -33,7 +33,7 @@
 }
 
 .details-button {
-    background-color: #4CAF50;
+    background-color: #679267;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -43,7 +43,7 @@
 }
 
 .details-button:hover {
-    background-color: #45a049;
+    background-color: #8fbc8f;
 }
 
 

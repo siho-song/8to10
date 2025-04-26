@@ -14,6 +14,7 @@ import TimeEditForm from "@/components/home/eventDetails/TimeEditForm.jsx";
 import {validateTitle} from "@/components/home/eventDetails/ValidateEventDetails.js";
 import ScheduleDeleteModal from "@/components/modal/ScheduleDeleteModal.jsx";
 import {EVENT_DETAILS_VALIDATE_MESSAGE} from "@/constants/ScheduleValidateMessage.js";
+import {isSuccess} from "@/helpers/AxiosHelper.js";
 
 const NScheduleDetails = ({selectedEvent, onClose}) => {
 
@@ -104,18 +105,17 @@ const NScheduleDetails = ({selectedEvent, onClose}) => {
             id: selectedEvent.extendedProps.originId,
             detailDescription: detailDescription,
         }
-        try {
-            const response = await authenticatedApi.put(
-                url,
-                data,
-                {apiEndPoint: API_ENDPOINT_NAMES.EDIT_N_SCHEDULE_ITEM,},
-            );
-
+        const response = await authenticatedApi.put(
+            url,
+            data,
+            {apiEndPoint: API_ENDPOINT_NAMES.EDIT_N_SCHEDULE_ITEM,},
+        );
+        if (await isSuccess(response)) {
             updateExtendedProps(selectedEvent.id, ['detailDescription'], [detailDescription]);
             setHasDetailDescription(detailDescription.length > 0);
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.MEMO_SUCCESS);
             setIsDetailDescriptionEditMode(false);
-        } catch (e) {
+        } else {
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.MEMO_FAIL);
         }
     }
@@ -127,18 +127,18 @@ const NScheduleDetails = ({selectedEvent, onClose}) => {
             title: title,
             commonDescription: commonDescription,
         }
-        try {
-            const response = await authenticatedApi.put(
-                url,
-                data,
-                {apiEndPoint: API_ENDPOINT_NAMES.EDIT_N_SCHEDULE},
-            );
 
-            updateExtendedPropsByGroupId(parseInt(selectedEvent.groupId), ['commonDescription'], [commonDescription]);
+        const response = await authenticatedApi.put(
+            url,
+            data,
+            {apiEndPoint: API_ENDPOINT_NAMES.EDIT_N_SCHEDULE},
+        );
+        if (await isSuccess(response)) {
+            updateExtendedPropsByGroupId(selectedEvent.groupId, ['commonDescription'], [commonDescription]);
             setHasCommonDescription(commonDescription.length > 0);
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.MEMO_SUCCESS);
             setIsCommonDescriptionEditMode(false);
-        } catch (e) {
+        } else {
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.MEMO_FAIL);
         }
     }
@@ -159,27 +159,53 @@ const NScheduleDetails = ({selectedEvent, onClose}) => {
             title: title,
             commonDescription: commonDescription,
         }
-        try {
-            const responseOfItemData = await authenticatedApi.put(
-                urlOfItemData,
-                itemData,
-                {apiEndPoint: API_ENDPOINT_NAMES.EDIT_N_SCHEDULE_ITEM,},
-            );
-            updateExtendedProps(selectedEvent.id, ['detailDescription'], [detailDescription]);
-            setHasDetailDescription(detailDescription.length > 0);
+        const itemResponse = await authenticatedApi.put(
+            urlOfItemData,
+            itemData,
+            {apiEndPoint: API_ENDPOINT_NAMES.EDIT_N_SCHEDULE_ITEM,},
+        );
 
-            const responseOfTotalData = await authenticatedApi.put(
-                urlOfTotalData,
-                totalData,
-                {apiEndPoint: API_ENDPOINT_NAMES.EDIT_N_SCHEDULE,},
-            );
-            updateExtendedPropsByGroupId(parseInt(selectedEvent.groupId), ['commonDescription'], [commonDescription]);
+        const totalResponse = await authenticatedApi.put(
+            urlOfTotalData,
+            totalData,
+            {apiEndPoint: API_ENDPOINT_NAMES.EDIT_N_SCHEDULE,},
+        );
+
+        const itemSuccess = await isSuccess(itemResponse);
+        const totalSuccess = await isSuccess(totalResponse);
+
+        if (itemSuccess && totalSuccess) {
+            updateExtendedProps(selectedEvent.id, ['detailDescription'], [detailDescription]);
+
+            setHasDetailDescription(detailDescription.length > 0);
+            updateExtendedPropsByGroupId(selectedEvent.groupId, ['commonDescription'], [commonDescription]);
             setHasCommonDescription(commonDescription.length > 0);
-            updatePropsByGroupId(parseInt(selectedEvent.groupId), ['title'], [title]);
+            updatePropsByGroupId(selectedEvent.groupId, ['title'], [title]);
 
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.MODIFICATION_SUCCESS);
             setIsItemEditMode(false);
-        } catch (e) {
+        } else {
+            if (!itemSuccess) {
+                await authenticatedApi.put(
+                    urlOfTotalData,
+                    {
+                        id: selectedEvent.extendedProps.parentId,
+                        title: selectedEvent.title,
+                        commonDescription: selectedEvent.extendedProps.commonDescription,
+                    },
+                    {apiEndPoint: API_ENDPOINT_NAMES.EDIT_N_SCHEDULE,},
+                );
+            }
+            if (!totalSuccess) {
+                await authenticatedApi.put(
+                    urlOfItemData,
+                    {
+                        id: selectedEvent.extendedProps.originId,
+                        detailDescription: selectedEvent.extendedProps.detailDescription,
+                    },
+                    {apiEndPoint: API_ENDPOINT_NAMES.EDIT_N_SCHEDULE_ITEM,},
+                )
+            }
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.MODIFICATION_FAIL);
         }
     }
@@ -196,65 +222,64 @@ const NScheduleDetails = ({selectedEvent, onClose}) => {
     };
 
     const handleTotalDelete = async () => {
-        try {
-            const url = `/schedule/${selectedEvent.extendedProps.parentId}`;
-            const response = await authenticatedApi.delete(
-                url,
-                {apiEndPoint: API_ENDPOINT_NAMES.DELETE_SCHEDULE,},
-            );
-
+        const url = `/schedule/normal/${selectedEvent.extendedProps.parentId}`;
+        const response = await authenticatedApi.delete(
+            url,
+            {apiEndPoint: API_ENDPOINT_NAMES.DELETE_SCHEDULE,},
+        );
+        if (await isSuccess(response)) {
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.DELETE_SUCCESS);
-            deleteEventsByGroupId(parseInt(selectedEvent.groupId));
+            deleteEventsByGroupId(selectedEvent.groupId);
             closeModal();
             onClose();
-        } catch(e) {
+        } else {
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.DELETE_FAIL);
         }
     }
 
     const handleTotalDeleteFromNow = async () => {
-        const earliestStart = getEarliestStartByGroupId(parseInt(selectedEvent.groupId));
+        const earliestStart = getEarliestStartByGroupId(selectedEvent.groupId);
 
         if (formatDateToLocalDateTime(selectedEvent.start) === earliestStart) {
             await handleTotalDelete();
             return;
         }
 
-        try {
-            const url = `/schedule/normal/detail?parentId=${selectedEvent.extendedProps.parentId}&startDate=${formatDateToLocalDateTime(selectedEvent.start)}`;
-            const response = await authenticatedApi.delete(
-                url,
-                {apiEndPoint: API_ENDPOINT_NAMES.DELETE_N_SCHEDULE_FROM_NOW,},
-            );
+        const url = `/schedule/normal/detail?parentId=${selectedEvent.extendedProps.parentId}&startDate=${formatDateToLocalDateTime(selectedEvent.start)}`;
+        const response = await authenticatedApi.delete(
+            url,
+            {apiEndPoint: API_ENDPOINT_NAMES.DELETE_N_SCHEDULE_FROM_NOW,},
+        );
+        if (await isSuccess(response)) {
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.DELETE_SUCCESS);
-            deleteEventsAfterDateByGroupId(parseInt(selectedEvent.groupId), selectedEvent.start);
+            deleteEventsAfterDateByGroupId(selectedEvent.groupId, selectedEvent.start);
             closeModal();
             onClose();
-        } catch (e) {
+        } else {
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.DELETE_FAIL);
         }
     }
 
     const handleItemDelete = async () => {
-        const currentEventCounts = countEventsByGroupId(parseInt(selectedEvent.groupId));
+        const currentEventCounts = countEventsByGroupId(selectedEvent.groupId);
 
         if (currentEventCounts === 1) {
             await handleTotalDelete();
             return;
         }
 
-        try {
-            const url = `/schedule/normal/detail/${selectedEvent.extendedProps.originId}`;
-            const response = await authenticatedApi.delete(
-                url,
-                {apiEndPoint: API_ENDPOINT_NAMES.DELETE_N_SCHEDULE_FROM_NOW,},
-            );
+        const url = `/schedule/normal/detail/${selectedEvent.extendedProps.originId}`;
+        const response = await authenticatedApi.delete(
+            url,
+            {apiEndPoint: API_ENDPOINT_NAMES.DELETE_N_SCHEDULE_FROM_NOW,},
+        );
 
+        if (await isSuccess(response)) {
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.DELETE_SUCCESS);
             deleteEvent(selectedEvent.id);
             closeModal();
             onClose();
-        } catch (e) {
+        } else {
             alert(EVENT_DETAILS_VALIDATE_MESSAGE.DELETE_FAIL);
         }
     }

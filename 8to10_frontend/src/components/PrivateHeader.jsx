@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import HouseIcon from '@mui/icons-material/House';
 import PeopleIcon from '@mui/icons-material/People';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ForumIcon from '@mui/icons-material/Forum';
 
 import logoIcon from '@/assets/images/logo.png';
 import Notification from "@/components/notification/Notification.jsx";
@@ -35,16 +36,20 @@ function PrivateHeader() {
                         <div className="image-container" data-alt="마이페이지">
                             <button className="image-link" onClick={openModal}>
                                 <AccountCircleIcon/>
+                                {/*<p className="header-icon-text">마이페이지</p>*/}
                             </button>
                         </div>
                         <div className="image-container" data-alt="커뮤니티">
                             <Link to="/community/board" className="image-link">
-                                <PeopleIcon/>
+                                <ForumIcon/>
+                                {/*<p className="header-icon-text">커뮤니티</p>*/}
+                                {/*<PeopleIcon/>*/}
                             </Link>
                         </div>
                         <div className="image-container" data-alt="홈">
                             <Link to="/home" className="image-link">
                                 <HouseIcon/>
+                                {/*<p className="header-icon-text">홈</p>*/}
                             </Link>
                         </div>
                     </ul>

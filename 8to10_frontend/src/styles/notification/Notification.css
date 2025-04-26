@@ -4,7 +4,7 @@
 .notification-popup {
     position: fixed;
     top: 7vh;
-    width: 320px; /* 사이드바 너비와 일치 */
+    width: 21%; /* 사이드바 너비와 일치 */
     right: 0; /* 화면 오른쪽에 정렬 */
     background-color: #fff;
     border: 1px solid #ccc;
@@ -18,13 +18,17 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px; /* 패딩을 줄여서 헤더 높이 감소 */
-    background-color: #4CAF50;
+    padding: 10px 8px; /* 패딩을 줄여서 헤더 높이 감소 */
+    background-color: #679267;
     color: #ffffff;
     border-bottom: 1px solid #ddd;
     font-weight: bold;
     font-size: 14px; /* 텍스트 크기를 줄임 */
     line-height: 1.2; /* 텍스트의 세로 정렬을 개선 */
+}
+
+.notification-popup-header-text {
+    margin: 0;
 }
 
 /* 닫기 버튼 */
@@ -63,22 +67,28 @@
 
 /* 읽지 않은 알림 스타일 */
 .notification-item.unread {
-    background-color: #f9f9f9;
+    background-color: #8fbc8f;
 }
 
 /* 읽은 알림 스타일 */
 .notification-item.read {
-    background-color: #aaaaaa;
+    background-color: #f9f9f9;
 }
 
 .notification-item:hover {
     background-color: #ececec;
 }
 
-.notification-item p {
+.notification-content {
     margin: 0;
-    font-size: 14px;
+    font-size: 0.85vw;
     color: #555;
+}
+
+.notification-receivedAt {
+    margin: 0;
+    font-size: 0.8vw;
+    color: #a2a2a2;
 }
 
 .notification-remove-button {
@@ -117,7 +127,6 @@
     font-size: 20px;
     color: #555;
     transition: color 0.3s ease;
-    margin-right: 10px;
 }
 
 .notification-button.has-unread {
