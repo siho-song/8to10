@@ -12,6 +12,7 @@ public class NewNotification {
     private String message;
     private String targetUrl;
     private Long relatedEntityId;
+    private String createdBy;
 
     public static NewNotification from(Long memberId, NotificationEvent event) {
         NewNotification newNotification = new NewNotification();
@@ -20,6 +21,7 @@ public class NewNotification {
         newNotification.message = event.getMessage();
         newNotification.setTargetUrl(event.getNotificationType().getBaseTargetUrl(),event.getTargetEntityId());
         newNotification.relatedEntityId = event.getRelatedEntityId();
+        newNotification.createdBy = event.getCreatedBy();
         return newNotification;
     }
 

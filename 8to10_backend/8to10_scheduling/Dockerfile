@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk
+FROM openjdk:21-jdk
 
 LABEL maintainer="siho-song"
 
@@ -14,6 +14,6 @@ COPY ./entrypoint.sh /app/entrypoint.sh
 
 RUN chmod +x ${WORK_DIR}/entrypoint.sh
 
-EXPOSE 8080
+EXPOSE 8081
 
 ENTRYPOINT ["/bin/sh", "/app/entrypoint.sh"]

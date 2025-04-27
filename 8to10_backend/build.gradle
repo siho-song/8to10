@@ -11,7 +11,7 @@ configurations {
 }
 
 allprojects {
-    java.sourceCompatibility = JavaVersion.VERSION_17
+    java.sourceCompatibility = JavaVersion.VERSION_21
     group = projectGroup
     version = applicationVersion
 

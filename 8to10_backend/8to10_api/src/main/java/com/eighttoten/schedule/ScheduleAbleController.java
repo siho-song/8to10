@@ -3,7 +3,7 @@ package com.eighttoten.schedule;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import com.eighttoten.member.domain.Member;
-import com.eighttoten.schedule.domain.ScheduleAble;
+import com.eighttoten.schedule.domain.scheduleable.ScheduleAble;
 import com.eighttoten.schedule.dto.response.ScheduleResponse;
 import com.eighttoten.schedule.service.ScheduleAbleService;
 import com.eighttoten.support.CurrentMember;

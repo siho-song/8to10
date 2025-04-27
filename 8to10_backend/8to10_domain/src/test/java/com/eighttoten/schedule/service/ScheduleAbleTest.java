@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import com.eighttoten.schedule.domain.ScheduleAble;
+import com.eighttoten.schedule.domain.scheduleable.ScheduleAble;
 import com.eighttoten.schedule.domain.fschedule.FDetailWithParent;
 import com.eighttoten.schedule.domain.fschedule.FScheduleDetail;
 import com.eighttoten.schedule.domain.fschedule.repository.FScheduleDetailRepository;

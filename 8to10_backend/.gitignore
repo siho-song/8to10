@@ -47,4 +47,4 @@ upload/**
 ### main/generated ###
 **/src/main/generated
 **/.DS_Store
-**/spy.log
+**/*.log

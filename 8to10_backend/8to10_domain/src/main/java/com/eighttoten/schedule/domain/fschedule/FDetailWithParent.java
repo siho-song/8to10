@@ -1,6 +1,7 @@
 package com.eighttoten.schedule.domain.fschedule;
 
-import com.eighttoten.schedule.domain.ScheduleAble;
+import com.eighttoten.schedule.domain.scheduleable.ScheduleAble;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class FDetailWithParent implements ScheduleAble {
     private Long id;
+    @JsonProperty(value = "fschedule")
     private FSchedule fSchedule;
     private String detailDescription;
     private LocalDateTime startDateTime;

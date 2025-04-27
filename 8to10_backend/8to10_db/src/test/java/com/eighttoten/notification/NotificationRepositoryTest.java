@@ -34,7 +34,7 @@ public class NotificationRepositoryTest {
     @DisplayName("새로운 알람을 저장한다.")
     void save(){
         //given
-        NotificationEvent notificationEvent = new NotificationEvent("test", 1L, 1L, "test", NotificationType.REPLY_ADD);
+        NotificationEvent notificationEvent = new NotificationEvent("test", 1L, 1L, "test", "test@example.com",NotificationType.REPLY_ADD);
         NewNotification newNotification = NewNotification.from(1L, notificationEvent);
         when(auditorAware.getCurrentAuditor()).thenReturn(Optional.of("test"));
 

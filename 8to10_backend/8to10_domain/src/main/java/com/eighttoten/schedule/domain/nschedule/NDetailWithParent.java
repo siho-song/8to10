@@ -1,6 +1,7 @@
 package com.eighttoten.schedule.domain.nschedule;
 
-import com.eighttoten.schedule.domain.ScheduleAble;
+import com.eighttoten.schedule.domain.scheduleable.ScheduleAble;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class NDetailWithParent implements ScheduleAble {
     private Long id;
+    @JsonProperty(value = "nschedule")
     private NSchedule nSchedule;
     private String detailDescription;
     private LocalDateTime startDateTime;

@@ -3,10 +3,12 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    runtimeOnly 'com.mysql:mysql-connector-j'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:3.3.2'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+//    runtimeOnly 'com.mysql:mysql-connector-j'
 
-    implementation 'p6spy:p6spy:3.9.1'
-    implementation 'com.github.gavlyukovskiy:datasource-decorator-spring-boot-autoconfigure:1.9.0'
+//    implementation 'p6spy:p6spy:3.9.1'
+//    implementation 'com.github.gavlyukovskiy:datasource-decorator-spring-boot-autoconfigure:1.9.0'
 
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
     annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"

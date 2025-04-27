@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class SchedulingTaskPublisher {
+    private static final String ADMIN = "ADMIN";
     private final AchievementRepository achievementRepository;
     private final MemberRepository memberRepository;
     private final ApplicationEventPublisher eventPublisher;
@@ -40,6 +41,7 @@ public class SchedulingTaskPublisher {
                     null,
                     null,
                     feedbackMessage.getMessage(),
+                    ADMIN,
                     type));
         }
     }
@@ -54,6 +56,7 @@ public class SchedulingTaskPublisher {
                     null,
                     null,
                     NotificationMessage.TODO_UPDATE.getMessage(),
+                    ADMIN,
                     type));
         }
     }
