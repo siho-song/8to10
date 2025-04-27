@@ -5,6 +5,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
 import com.eighttoten.BaseEntity;
+import com.eighttoten.BaseTimeEntity;
 import com.eighttoten.member.MemberEntity;
 import com.eighttoten.notification.domain.NewNotification;
 import com.eighttoten.notification.domain.Notification;
@@ -18,6 +19,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,7 +28,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @Table(name = "notification")
-public class NotificationEntity extends BaseEntity {
+public class NotificationEntity extends BaseTimeEntity {
     @Id @GeneratedValue(strategy = IDENTITY)
     @Column(name = "notification_id")
     private Long id;
@@ -42,6 +45,10 @@ public class NotificationEntity extends BaseEntity {
     private String message;
 
     private String targetUrl;
+
+    private String createdBy;
+
+    private String updatedBy;
 
     private Long relatedEntityId;
 
@@ -60,6 +67,8 @@ public class NotificationEntity extends BaseEntity {
         notificationEntity.message = newNotification.getMessage();
         notificationEntity.targetUrl = newNotification.getTargetUrl();
         notificationEntity.relatedEntityId = newNotification.getRelatedEntityId();
+        notificationEntity.createdBy = newNotification.getCreatedBy();
+        notificationEntity.updatedBy = newNotification.getCreatedBy();
         return notificationEntity;
     }
 

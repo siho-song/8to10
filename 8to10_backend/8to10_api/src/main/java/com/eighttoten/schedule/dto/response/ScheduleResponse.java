@@ -1,11 +1,10 @@
 package com.eighttoten.schedule.dto.response;
 
-import com.eighttoten.exception.BadRequestException;
 import com.eighttoten.exception.BusinessException;
 import com.eighttoten.exception.ExceptionCode;
-import com.eighttoten.schedule.domain.ScheduleAble;
 import com.eighttoten.schedule.domain.fschedule.FDetailWithParent;
 import com.eighttoten.schedule.domain.nschedule.NDetailWithParent;
+import com.eighttoten.schedule.domain.scheduleable.ScheduleAble;
 import com.eighttoten.schedule.domain.vschedule.VSchedule;
 import java.time.LocalDateTime;
 import lombok.Getter;

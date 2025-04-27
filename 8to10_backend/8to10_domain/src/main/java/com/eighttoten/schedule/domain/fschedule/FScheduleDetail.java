@@ -1,6 +1,6 @@
 package com.eighttoten.schedule.domain.fschedule;
 
-import com.eighttoten.schedule.domain.ScheduleAble;
+import com.eighttoten.schedule.domain.scheduleable.ScheduleAble;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

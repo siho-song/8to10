@@ -1,7 +1,7 @@
 package com.eighttoten.schedule.service.nschedule;
 
 import com.eighttoten.common.AppConstant;
-import com.eighttoten.schedule.domain.ScheduleAble;
+import com.eighttoten.schedule.domain.scheduleable.ScheduleAble;
 import com.eighttoten.schedule.domain.nschedule.TimeSlot;
 import java.time.DayOfWeek;
 import java.time.Duration;

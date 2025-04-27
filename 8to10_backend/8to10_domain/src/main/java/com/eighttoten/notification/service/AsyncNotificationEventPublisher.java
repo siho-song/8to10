@@ -27,6 +27,7 @@ public class AsyncNotificationEventPublisher {
                     replyAddEvent.getPostId(),
                     replyAddEvent.getReplyId(),
                     NotificationMessage.NESTED_REPLY_ADD.getMessage(),
+                    replyWriter,
                     NotificationType.NESTED_REPLY_ADD));
         }
 
@@ -37,6 +38,7 @@ public class AsyncNotificationEventPublisher {
                     replyAddEvent.getPostId(),
                     replyAddEvent.getReplyId(),
                     NotificationMessage.REPLY_ADD.getMessage(),
+                    replyWriter,
                     NotificationType.REPLY_ADD));
         }
     }

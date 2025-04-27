@@ -2,7 +2,7 @@ package com.eighttoten.schedule.service.nschedule;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.eighttoten.schedule.domain.ScheduleAble;
+import com.eighttoten.schedule.domain.scheduleable.ScheduleAble;
 import com.eighttoten.schedule.domain.fschedule.FScheduleDetail;
 import com.eighttoten.schedule.domain.nschedule.NScheduleDetail;
 import com.eighttoten.schedule.domain.nschedule.TimeSlot;

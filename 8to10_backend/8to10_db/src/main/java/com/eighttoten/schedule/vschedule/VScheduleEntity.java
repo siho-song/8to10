@@ -56,7 +56,7 @@ public class VScheduleEntity extends BaseEntity {
     }
 
     public VSchedule toVSchedule(){
-        return new VSchedule(id, memberEntity.toMember(), title, commonDescription,
+        return new VSchedule(id, title, commonDescription,
                 startDateTime, endDateTime, createdBy);
     }
 

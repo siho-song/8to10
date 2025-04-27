@@ -44,15 +44,16 @@ public class RedisMessageSubscriber {
 
         NewNotification newNotification = NewNotification.from(member.getId(), event);
         long savedId = 0L;
-        if (newNotification.getNotificationType().getIsNeededSave()) {
-            savedId = notificationRepository.save(newNotification);
-        }
-
-        Notification notification = notificationRepository.findById(savedId)
-                .orElseThrow(() -> new NotFoundEntityException(ExceptionCode.NOT_FOUND_NOTIFICATION));
 
         List<SseEmitter> emitters = sseEmitterService.findAllStartWithByMemberEmail(member.getEmail());
         if (!emitters.isEmpty()) {
+            if (newNotification.getNotificationType().getIsNeededSave()) {
+                savedId = notificationRepository.save(newNotification);
+            }
+
+            Notification notification = notificationRepository.findById(savedId)
+                    .orElseThrow(() -> new NotFoundEntityException(ExceptionCode.NOT_FOUND_NOTIFICATION));
+
             emitters.forEach(emitter -> sseEmitterService.sendToClient(
                     emitter,
                     sseEmitterService.generateUniqueClientId(member.getEmail(), LocalDateTime.now()),
