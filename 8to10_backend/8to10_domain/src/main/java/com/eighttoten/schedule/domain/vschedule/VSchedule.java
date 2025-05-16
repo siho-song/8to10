@@ -1,11 +1,12 @@
 package com.eighttoten.schedule.domain.vschedule;
 
-import com.eighttoten.member.domain.Member;
 import com.eighttoten.schedule.domain.scheduleable.ScheduleAble;
 import java.time.LocalDateTime;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class VSchedule implements ScheduleAble {
     private Long id;
     private String title;
