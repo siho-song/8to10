@@ -2,7 +2,6 @@ package com.eighttoten.schedule.service;
 
 import com.eighttoten.schedule.domain.scheduleable.ScheduleAble;
 import com.eighttoten.schedule.domain.scheduleable.ScheduleAbleRepository;
-import com.eighttoten.schedule.domain.scheduleable.ScheduleAbles;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

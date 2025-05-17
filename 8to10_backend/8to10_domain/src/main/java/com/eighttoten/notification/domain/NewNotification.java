@@ -1,6 +1,5 @@
 package com.eighttoten.notification.domain;
 
-import com.eighttoten.notification.event.NotificationEvent;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,14 +13,15 @@ public class NewNotification {
     private Long relatedEntityId;
     private String createdBy;
 
-    public static NewNotification from(Long memberId, NotificationEvent event) {
+    public static NewNotification of(Long memberId, NotificationType type, String message, Long targetEntityId,
+                                     Long relatedEntityId, String createdBy) {
         NewNotification newNotification = new NewNotification();
         newNotification.memberId = memberId;
-        newNotification.notificationType = event.getNotificationType();
-        newNotification.message = event.getMessage();
-        newNotification.setTargetUrl(event.getNotificationType().getBaseTargetUrl(),event.getTargetEntityId());
-        newNotification.relatedEntityId = event.getRelatedEntityId();
-        newNotification.createdBy = event.getCreatedBy();
+        newNotification.notificationType = type;
+        newNotification.message = message;
+        newNotification.setTargetUrl(type.getBaseTargetUrl(),targetEntityId);
+        newNotification.relatedEntityId = relatedEntityId;
+        newNotification.createdBy = createdBy;
         return newNotification;
     }
 

@@ -6,6 +6,7 @@ import lombok.Getter;
 
 @Getter
 public class NotificationEvent {
+    final Long notificationId;
     final String clientEmail;
     final String eventId;
     final Long targetEntityId;
@@ -14,9 +15,10 @@ public class NotificationEvent {
     final String createdBy;
     final NotificationType notificationType;
 
-    public NotificationEvent(String clientEmail, Long targetEntityId, Long relatedEntityId,
+    public NotificationEvent(Long notificationId, String clientEmail, Long targetEntityId, Long relatedEntityId,
                              String message,String createdBy,
                              NotificationType notificationType) {
+        this.notificationId = notificationId;
         this.clientEmail = clientEmail;
         this.eventId = UUID.randomUUID().toString();
         this.targetEntityId = targetEntityId;

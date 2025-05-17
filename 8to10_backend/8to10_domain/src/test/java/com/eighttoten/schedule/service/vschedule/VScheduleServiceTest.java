@@ -32,7 +32,7 @@ class VScheduleServiceTest {
     void update() {
         //given
         Member member = TestDataUtils.createTestMember(1L,"normal@example.com");
-        VSchedule vSchedule = new VSchedule(null, member, "변동일정 제목", "변동일정 메모", null, null, member.getEmail());
+        VSchedule vSchedule = new VSchedule(null, "변동일정 제목", "변동일정 메모", null, null, member.getEmail());
         VScheduleUpdate vScheduleUpdate = new VScheduleUpdate(1L, "수정된 변동일정 제목", "수정된 변동일정 메모",
                 LocalDateTime.of(1, 1, 1, 1, 1), LocalDateTime.of(2, 2, 2, 2, 2));
         when(vScheduleRepository.findById(any())).thenReturn(Optional.of(vSchedule));

@@ -8,6 +8,7 @@ import com.eighttoten.schedule.domain.fschedule.NewFDetail;
 import com.eighttoten.schedule.domain.fschedule.repository.FScheduleDetailRepository;
 import com.eighttoten.schedule.fschedule.FScheduleDetailEntity;
 import com.eighttoten.schedule.fschedule.FScheduleEntity;
+import com.eighttoten.schedule.fschedule.projection.FScheduleDetailProjection;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -71,8 +72,8 @@ public class FScheduleDetailRepositoryImpl implements FScheduleDetailRepository 
 
     @Override
     public List<FDetailWithParent> findAllWithParentByMemberEmailInPeriod(String email, LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        List<FScheduleDetailEntity> entities = fScheduleDetailRepository.findAllWithParentByMemberEmailInPeriod(
+        List<FScheduleDetailProjection> entities = fScheduleDetailRepository.findAllWithParentByMemberEmailInPeriod(
                 email, startDateTime, endDateTime);
-        return entities.stream().map(FScheduleDetailEntity::toFDetailWithParent).toList();
+        return entities.stream().map(FScheduleDetailProjection::toFDetailWithParent).toList();
     }
 }

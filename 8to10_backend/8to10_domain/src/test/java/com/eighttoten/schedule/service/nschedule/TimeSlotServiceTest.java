@@ -134,7 +134,7 @@ public class TimeSlotServiceTest {
     }
 
     private ScheduleAble createVSchedule(LocalDateTime start, LocalDateTime end){
-        return new VSchedule(null, null, null, null, start,
-                end, null);
+        return new VSchedule(null, null, null, start,
+                end,null);
     }
 }

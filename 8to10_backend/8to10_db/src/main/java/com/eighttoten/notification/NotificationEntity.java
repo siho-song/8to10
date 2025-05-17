@@ -4,7 +4,6 @@ import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 import static lombok.AccessLevel.PROTECTED;
 
-import com.eighttoten.BaseEntity;
 import com.eighttoten.BaseTimeEntity;
 import com.eighttoten.member.MemberEntity;
 import com.eighttoten.notification.domain.NewNotification;
@@ -19,8 +18,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

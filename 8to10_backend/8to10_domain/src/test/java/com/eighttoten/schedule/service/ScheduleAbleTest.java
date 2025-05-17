@@ -43,17 +43,17 @@ class ScheduleAbleTest {
     void findAllBetweenStartAndEnd(){
         //given
         VSchedule vSchedule = new VSchedule(null, null, null, null,
-                null, null, null);
+                null, null);
         when(vScheduleRepository.findAllByMemberEmailInPeriod(any(), any(), any())).thenReturn(List.of(vSchedule));
 
-        NScheduleDetail nScheduleDetail = new NScheduleDetail(null, null, null, null, null,
+        NDetailWithParent nScheduleDetail = new NDetailWithParent(null, null, null, null, null,
                 null, null, false, 0, 0);
-        when(nScheduleDetailRepository.findAllByMemberEmailInPeriod(any(), any(), any())).thenReturn(
+        when(nScheduleDetailRepository.findAllWithParentByMemberEmailInPeriod(any(), any(), any())).thenReturn(
                 List.of(nScheduleDetail));
 
-        FScheduleDetail fScheduleDetail = new FScheduleDetail(null, null, null,
+        FDetailWithParent fScheduleDetail = new FDetailWithParent(null, null, null,
                 null, null, null);
-        when(fScheduleDetailRepository.findAllByMemberEmailInPeriod(any(), any(), any())).thenReturn(
+        when(fScheduleDetailRepository.findAllWithParentByMemberEmailInPeriod(any(), any(), any())).thenReturn(
                 List.of(fScheduleDetail));
 
         //when
@@ -68,7 +68,7 @@ class ScheduleAbleTest {
     void findAllWithParentByMember(){
         //given
         VSchedule vSchedule = new VSchedule(null, null, null, null,
-                null, null, null);
+                null, null);
         when(vScheduleRepository.findAllByMemberEmailInPeriod(any(),any(),any())).thenReturn(List.of(vSchedule));
 
         NDetailWithParent nDetailWithParent = new NDetailWithParent(null, null, null, null, null,

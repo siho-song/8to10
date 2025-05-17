@@ -48,6 +48,7 @@ public class ReplyService{
         ReplyWithPost replyWithPost = replyRepository.findByIdWithPost(savedId)
                 .orElseThrow(() -> new NotFoundEntityException(NOT_FOUND_REPLY));
 
+        //알람 처리 서비스가 따로 존재했으면
         eventPublisher.notifyReplyAddEvent(ReplyAddEvent.from(replyWithPost, parentReplyWriter));
     }
 

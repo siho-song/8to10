@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface FScheduleDetailJpaRepository extends JpaRepository<FScheduleDetailEntity, Long> {
+public interface FScheduleDetailJpaRepository extends JpaRepository<FScheduleDetailEntity, Long> , FScheduleDetailCustomRepository{
     @Modifying
     @Query("delete from FScheduleDetailEntity fd where fd.id in :ids")
     void deleteAllByIds(@Param(value = "ids") List<Long> ids);
@@ -24,9 +24,9 @@ public interface FScheduleDetailJpaRepository extends JpaRepository<FScheduleDet
                                                                        @Param(value = "start") LocalDateTime start,
                                                                        @Param(value = "end") LocalDateTime end);
 
-    @EntityGraph(attributePaths = "fScheduleEntity")
-    @Query("select fd from FScheduleDetailEntity fd where fd.startDateTime >= :start and fd.endDateTime <= :end and fd.createdBy = :memberEmail")
-    List<FScheduleDetailEntity> findAllWithParentByMemberEmailInPeriod(@Param(value = "memberEmail") String memberEmail,
-                                                                       @Param(value = "start") LocalDateTime start,
-                                                                       @Param(value = "end") LocalDateTime end);
+//    @EntityGraph(attributePaths = "fScheduleEntity")
+//    @Query("select fd from FScheduleDetailEntity fd where fd.startDateTime >= :start and fd.endDateTime <= :end and fd.createdBy = :memberEmail")
+//    List<FScheduleDetailEntity> findAllWithParentByMemberEmailInPeriod(@Param(value = "memberEmail") String memberEmail,
+//                                                                       @Param(value = "start") LocalDateTime start,
+//                                                                       @Param(value = "end") LocalDateTime end);
 }
